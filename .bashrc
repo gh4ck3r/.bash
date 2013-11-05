@@ -1,0 +1,63 @@
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Set prompt using terminal ANSI code
+PS1='\[\e[01;32m\][\u@\h \[\e[36;1m\]\W\[\e[01;32m\]]\$\[\e[0m\] '
+export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]}: '
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+	PROMPT_COMMAND='echo -ne "\e]0;$USER@$HOSTNAME: ${PWD/$HOME/~}\a"'
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+function source_if_exist()
+{
+	if [ -f "$1" ];then source $1;fi
+}
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+for f in $(dirname $(readlink -e ${BASH_SOURCE[0]}))/profile.d/*.sh;do
+	if [ -r $f ];then . $f;fi
+done
+
+# for Korean support on rhythmbox
+if [ -x /usr/bin/rhythmbox ];then
+	GST_TAG_ENCODING=cp949
+	export GST_TAG_ENCODING
+fi
+
+export GREP_COLORS='fn=01;36:ln=01;32'
