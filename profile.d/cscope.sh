@@ -9,6 +9,16 @@ done
 unset CSCOPE_TARGET_EXT
 _CSCOPE_TARGET_FIND_PATTERN="${_CSCOPE_TARGET_FIND_PATTERN%-o } ) -print";
 
+function _cscope_build_db()
+{
+	local at=$1
+	echo -n "Generate cscope DB" && (
+		pushd $at > /dev/null 2>&1 &&
+		cscope -bqk &&
+		popd > /dev/null 2>&1
+	) && echo " -- Done" || echo " -- Failed"
+}
+
 function _cscope-linux-at()
 {
 	local at=$1
@@ -26,9 +36,7 @@ function _cscope-linux-at()
 			! -path "$at/arch/arm*" \
 			-prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-
-	echo "Generate cscope DB"
-	cscope -bqk -i $list_file -f $at/cscope.out
+	_cscope_build_db $at
 }
 
 function _cscope-gaia-at()
@@ -41,8 +49,7 @@ function _cscope-gaia-at()
 		-path "$at/xulrunner" -prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
 
-	echo "Generate cscope DB"
-	cscope -bqk -i $list_file -f $at/cscope.out
+	_cscope_build_db $at
 }
 
 function _cscope-gecko-at()
@@ -59,8 +66,7 @@ function _cscope-gecko-at()
 		-path "$at/*mswindows" -prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
 
-	echo "Generate cscope DB"
-	cscope -bqk -i $list_file -f $at/cscope.out
+	_cscope_build_db $at
 }
 
 function _cscope-b2g-at()
