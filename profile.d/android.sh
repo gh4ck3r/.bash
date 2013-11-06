@@ -361,7 +361,6 @@ function adb-tcpdump()
 	adb pull /data/dump.pcap
 	echo "    --> dump.pcap"
 }
-alias browser="adb shell am start com.android.browser"
  
 function ndk-at()
 {
@@ -408,3 +407,6 @@ function ndk-at()
 		
 }
 
+#alias browser="adb shell am start com.android.browser"
+#alias android-connect="mtpfs -o allow_other /media/OptimusPad"
+#alias android-disconnect="fusermount -u /media/OptimusPad"
