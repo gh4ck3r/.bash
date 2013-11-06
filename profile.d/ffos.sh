@@ -2,9 +2,7 @@
 
 export GREP_OPTIONS='--exclude=cscope.* --exclude-dir=.git'
 
-if [ -r ~/.ffos/lg_ffos_tools/ffos ];then
-	source ~/.ffos/lg_ffos_tools/ffos
-fi
+if [ -r ~/.ffos/ffos ];then source ~/.ffos/ffos; fi
 
 function inherit_build_environment()
 {
