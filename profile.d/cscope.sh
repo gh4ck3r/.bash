@@ -63,6 +63,36 @@ function _cscope-gecko-at()
 	cscope -bqk -i $list_file -f $at/cscope.out
 }
 
+function _cscope-b2g-at()
+{
+	local at=$1
+
+	shift;
+	if [ $# -eq 0 ];then
+		_cscope-gecko-at $at/gecko
+		_cscope-gaia-at  $at/gaia
+		_cscope-linux-at $at/kernel
+	else
+		while [ $# -gt 0 ];do
+			case "$1" in
+				gecko)
+					_cscope-gecko-at $at/gecko
+					;;
+				gaia)
+					_cscope-gaia-at  $at/gaia
+					;;
+				kernel)
+					_cscope-linux-at $at/kernel
+					;;
+				*)
+					echo "Unknown cscope target : $1"
+					;;
+			esac
+			shift
+		done
+	fi
+}
+
 function _cscope-determine-sourcetree()
 {
 	local target=$1
@@ -76,6 +106,7 @@ function _cscope-determine-sourcetree()
 		[linux]="arch block crypto drivers firmware fs include init ipc kernel lib mm net samples scripts security sound usr virt"
 		[gecko]="accessible addon-sdk b2g browser build caps chrome config content db docshell dom editor embedding extensions gfx hal image intl ipc js layout media memory mfbt mobile modules mozglue netwerk nsprpub other-licenses parser probes profile python rdf security services startupcache storage testing toolkit tools uriloader view webapprt widget xpcom xpfe xulrunner"
 		[gaia]="apps bin build distribution_tablet dogfood_apps external-apps locales media-samples shared showcase_apps test_apps test_external_apps test_media tests tools"
+		[b2g]="abi build development gaia hardware librecovery ndk prebuilt system bionic device external gecko kernel vendor bootable frameworks gonk-misc libcore packages sdk build/envsetup.sh"
 	)
 	for type in ${!source_dirs[@]};do
 		local found=true
@@ -109,7 +140,7 @@ function cscope-at()
 	if [ "$(type -t $handler)" = "function" ];then
 		if $handler $at;then
 			local db=$at/cscope.out
-			if [[ "$CSCOPE_DB" != *$db* ]];then
+			if [ -f $db ] && [[ "$CSCOPE_DB" != *$db* ]];then
 				export CSCOPE_DB+=${CSCOPE_DB:+:}$db;
 			fi
 		fi
