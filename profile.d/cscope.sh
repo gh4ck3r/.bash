@@ -75,6 +75,7 @@ function _cscope-b2g-at()
 
 	shift;
 	if [ $# -eq 0 ];then
+		echo "cscope databases for b2g is generating"
 		_cscope-gecko-at $at/gecko
 		_cscope-gaia-at  $at/gaia
 		_cscope-linux-at $at/kernel
@@ -110,9 +111,9 @@ function _cscope-determine-sourcetree()
 	declare -A source_dirs=(
 		# define source type and it's subdirectories here
 		[linux]="arch block crypto drivers firmware fs include init ipc kernel lib mm net samples scripts security sound usr virt"
-		[gecko]="accessible addon-sdk b2g browser build caps chrome config content db docshell dom editor embedding extensions gfx hal image intl ipc js layout media memory mfbt mobile modules mozglue netwerk nsprpub other-licenses parser probes profile python rdf security services startupcache storage testing toolkit tools uriloader view webapprt widget xpcom xpfe xulrunner"
-		[gaia]="apps bin build distribution_tablet dogfood_apps external-apps locales media-samples shared showcase_apps test_apps test_external_apps test_media tests tools"
-		[b2g]="abi build development gaia hardware librecovery ndk prebuilt system bionic device external gecko kernel vendor bootable frameworks gonk-misc libcore packages sdk build/envsetup.sh"
+		[gecko]="accessible b2g browser build caps chrome config content db docshell dom editor embedding extensions gfx hal image intl ipc js layout media memory mfbt mobile modules mozglue netwerk nsprpub other-licenses parser probes profile python rdf security services startupcache storage testing toolkit tools uriloader view webapprt widget xpcom xpfe xulrunner"
+		[gaia]="apps build dogfood_apps external-apps locales media-samples shared showcase_apps test_apps test_external_apps test_media tests tools"
+		[b2g]="abi build development gaia hardware librecovery ndk prebuilt system bionic device external gecko kernel vendor bootable frameworks gonk-misc libcore build/envsetup.sh"
 	)
 	for type in ${!source_dirs[@]};do
 		local found=true
