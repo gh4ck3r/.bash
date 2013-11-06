@@ -3,7 +3,12 @@
 ANDROID_SDK=~/Android/sdk
 ANDROID_NDK=~/Android/ndk
 
-export PATH=$ANDROID_SDK/platform-tools:$ANDROID_SDK/tools:$PATH
+if [[ "$PATH" != *$ANDROID_SDK/platform-tools* ]];then
+	PATH=$ANDROID_SDK/platform-tools:$PATH
+fi
+if [[ "$PATH" != *$ANDROID_SDK/tools* ]];then
+	PATH=$ANDROID_SDK/tools:$PATH
+fi
 
 function eclipse-at()
 {
