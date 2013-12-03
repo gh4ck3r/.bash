@@ -3,9 +3,11 @@
 declare -a CSCOPE_TARGET_EXT=('*.aidl' '*.pidl' '*.idl' '*.xml' '*.xbl' '*.mk' '*.js' '*.jsm' '*.java' '*.h' '*.hh' '*.hpp' '*.c' '*.cc' '*.cpp' '*.s' '*.x');
 # Generate find parameter to find targets
 _CSCOPE_TARGET_FIND_PATTERN="-type f ( ";
+set -f
 for _ptrn in ${CSCOPE_TARGET_EXT[@]}; do
 	_CSCOPE_TARGET_FIND_PATTERN+="-iname $_ptrn -o ";
 done
+set +f
 unset CSCOPE_TARGET_EXT
 _CSCOPE_TARGET_FIND_PATTERN="${_CSCOPE_TARGET_FIND_PATTERN%-o } ) -print";
 
@@ -155,12 +157,14 @@ function cscope-at()
 	local handler=_cscope-$target-at
 
 	if [ "$(type -t $handler)" = "function" ];then
+		set -f
 		if $handler $at;then
 			local db=$at/cscope.out
 			if [ -f $db ] && [[ "$CSCOPE_DB" != *$db* ]];then
 				export CSCOPE_DB+=${CSCOPE_DB:+:}$db;
 			fi
 		fi
+		set +f
 		return 0
 	fi
 
