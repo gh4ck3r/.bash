@@ -26,7 +26,9 @@ function _cscope-unknown-at()
 	local at=$1
 	local list_file="$at/cscope.files"
 	echo "Generate file list for cscope at $at"
+	set -f
 	find $at $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+	set +f
 
 	_cscope_build_db $at
 }
@@ -37,6 +39,7 @@ function _cscope-linux-at()
 	local list_file="$at/cscope.files"
 
 	echo "Generate file list of linux kernel for cscope at $at"
+	set -f
 	find $at \
 		-type d \
 			-path "$at/include/asm-*" \
@@ -48,6 +51,7 @@ function _cscope-linux-at()
 			! -path "$at/arch/arm*" \
 			-prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+	set +f
 	_cscope_build_db $at
 }
 
@@ -56,10 +60,12 @@ function _cscope-gaia-at()
 	local at=$1
 	local list_file="$at/cscope.files"
 	echo "Generate file list of gaia for cscope at $at"
+	set -f
 	find $at \
 		-path "$at/xulrunner-sdk" -prune -o \
 		-path "$at/xulrunner" -prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+	set +f
 
 	_cscope_build_db $at
 }
@@ -69,6 +75,7 @@ function _cscope-gecko-at()
 	local at=$1
 	local list_file="$at/cscope.files"
 	echo "Generate file list of gecko for cscope at $at"
+	set -f
 	find $at \
 		-path "$at/python" -prune -o \
 		-path "$at/*test" -prune -o \
@@ -77,6 +84,7 @@ function _cscope-gecko-at()
 		-path "$at/*gtk2" -prune -o \
 		-path "$at/*mswindows" -prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+	set +f
 
 	_cscope_build_db $at
 }
