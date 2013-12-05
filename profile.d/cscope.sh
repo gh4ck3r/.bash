@@ -62,7 +62,7 @@ function _cscope-gaia-at()
 	echo "Generate file list of gaia for cscope at $at"
 	set -f
 	find $at \
-		-path "$at/xulrunner-sdk" -prune -o \
+		-path "$at/xulrunner-sdk*" -prune -o \
 		-path "$at/xulrunner" -prune -o \
 		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
 	set +f
