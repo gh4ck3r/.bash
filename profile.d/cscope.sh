@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a CSCOPE_TARGET_EXT=('*.aidl' '*.pidl' '*.idl' '*.xml' '*.xbl' '*.mk' '*.js' '*.jsm' '*.java' '*.h' '*.hh' '*.hpp' '*.c' '*.cc' '*.cpp' '*.s' '*.x');
+declare -a CSCOPE_TARGET_EXT=('*.webidl' '*.aidl' '*.pidl' '*.idl' '*.xml' '*.xbl' '*.mk' '*.js' '*.jsm' '*.java' '*.h' '*.hh' '*.hpp' '*.c' '*.cc' '*.cpp' '*.s' '*.x');
 # Generate find parameter to find targets
 _CSCOPE_TARGET_FIND_PATTERN="-type f ( ";
 set -f
