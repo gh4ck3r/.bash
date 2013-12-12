@@ -14,7 +14,7 @@ function __complete_files_at()
   local found=( $(compgen -f $finding) )
   for f in ${found[@]};do
     if [ $f = "$rootdir/." -o $f = "$rootdir/.." ];then continue; fi;
-    if [ -d $f ];then f+="/"; fi
+    if [ -d $f -a ! -d "${f#$rootdir}" ];then f+="/"; fi
     COMPREPLY[${#COMPREPLY[@]}]=${f#$rootdir}
   done
 
