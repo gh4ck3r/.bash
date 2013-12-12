@@ -12,12 +12,14 @@ function __complete_files_at()
 
   local finding=$rootdir$completing
   local found=( $(compgen -f $finding) )
-  for f in ${found[@]};do
-    if [ $f = "$rootdir/." -o $f = "$rootdir/.." ];then continue; fi;
-    if [ -d $f -a ! -d "${f#$rootdir}" ];then f+="/"; fi
-    COMPREPLY[${#COMPREPLY[@]}]=${f#$rootdir}
+  local let i=0
+  for ((i;i<${#found[@]};++i)) ;do
+    local f="${found[$i]}"
+    [[ ${f: -2} = "/." || ${f: -3} = "/.." ]] && continue
+    local _f="${f#$rootdir}"
+    [[ -d "$f" && ! -d "$_f" ]] && _f+="/";
+    COMPREPLY[${#COMPREPLY[@]}]="$_f"
   done
-
 
   local basedir=${finding%/}
   while [ "$basedir" != "$rootdir" -a $basedir != "/" ];do
