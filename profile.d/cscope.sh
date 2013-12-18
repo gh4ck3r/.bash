@@ -96,9 +96,9 @@ function _cscope-b2g-at()
 	shift;
 	if [ $# -eq 0 ];then
 		echo "cscope databases for b2g is generating"
-		_cscope-gecko-at $at/gecko
-		_cscope-gaia-at  $at/gaia
-		_cscope-linux-at $at/kernel
+		[[ -d $at/gecko  ]] && _cscope-gecko-at $at/gecko
+		[[ -d $at/gaia   ]] && _cscope-gaia-at  $at/gaia
+		[[ -d $at/kernel ]] && _cscope-linux-at $at/kernel
 	else
 		while [ $# -gt 0 ];do
 			case "$1" in
