@@ -1,13 +1,12 @@
 #!/bin/bash
 
 addon_bin=cfx
-
-type cfx 2>&1 >/dev/null || return;
+type $addon_bin >/dev/null 2>&1 || return;
 
 # Trying to connect with nightly
 firefox_bin=/opt/firefox/firefox 
 [[ -x $firefox_bin ]] && 
-  alias cfx="cfx -b $firefox_bin"
+  alias $addon_bin="$addon_bin -b $firefox_bin"
 unset firefox_bin
 
 __cfx_subcmds="init docs run test xpi"
@@ -48,5 +47,5 @@ _comp_cfx() {
 
   COMPREPLY=( $(compgen -W "$complete_target" -- $completing) )
 }
-complete -F _comp_cfx cfx
-
+complete -F _comp_cfx $addon_bin
+unset addon_bin
