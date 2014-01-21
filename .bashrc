@@ -24,7 +24,9 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Set prompt using terminal ANSI code
-PS1='\[\e[01;32m\][\u@\h \[\e[36;1m\]\W\[\e[01;32m\]]\$\[\e[0m\] '
+__PS1_PREFIX='\[\e[01;32m\][\u@\h'
+__PS1_SUFFIX=' \[\e[36;1m\]\W\[\e[01;32m\]]\$\[\e[0m\] '
+PS1=$__PS1_PREFIX$__PS1_SUFFIX
 export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]}: '
 
 # If this is an xterm set the title to user@host:dir
