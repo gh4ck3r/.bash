@@ -32,7 +32,7 @@ export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]}: '
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-	PROMPT_COMMAND='echo -ne "\e]0;$USER@$HOSTNAME: ${PWD/$HOME/~}\a"'
+	PROMPT_COMMAND='echo -ne "\e]0;$USER@$HOSTNAME: ${PWD/$HOME/~}\a";'
     ;;
 *)
     ;;
