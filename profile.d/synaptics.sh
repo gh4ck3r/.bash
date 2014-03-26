@@ -1,6 +1,6 @@
 # Synaptics TouchPad driver settings
-if [[ synclient=$(type -tfp synclient) && -x $synclient ]];then
-  if [[ $(xinput -list | grep "Synaptics TouchPad") ]];then
+if [[ -x $(type -tfp synclient) ]];then
+  if xinput -list | grep -e "Synaptics TouchPad" -e "Elantech Touchpad" >/dev/null 2>&1 ;then
     # 2 finger scroll
     synclient HorizTwoFingerScroll=1 VertTwoFingerScroll=1 EmulateTwoFingerMinZ=40 EmulateTwoFingerMinW=8 2>/dev/null
     # Palm rejection
