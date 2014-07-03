@@ -46,8 +46,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 __bashrc_dir=$(dirname $(readlink -e ${BASH_SOURCE[0]}))
-for f in $__bashrc_dir/profile.d/*.sh;do
-	if [ -r $f ];then . $f;fi
+for __bash_scripts in $__bashrc_dir/profile.d/*.sh;do
+	if [ -r $__bash_scripts ];then . $__bash_scripts;fi
 done
 
 # for Korean support on rhythmbox
