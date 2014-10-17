@@ -1,6 +1,17 @@
 #!/bin/bash
 
-declare -a CSCOPE_TARGET_EXT=('*.webidl' '*.aidl' '*.ipdl' '*.idl' '*.xml' '*.xbl' '*.mk' '*.js' '*.jsm' '*.java' '*.h' '*.hh' '*.hpp' '*.c' '*.cc' '*.cpp' '*.s' '*.x');
+declare -a CSCOPE_TARGET_EXT=(
+    '*.webidl' '*.aidl' '*.ipdl' '*.idl'
+    '*.xml' '*.xbl' '*.html'
+    '*.mk'
+    '*.js' '*.jsm' '*.json'
+    '*.java'
+    '*.h' '*.H' '*.hh' '*.hpp' '*.hxx'
+    '*.c' '*.C' '*.cc' '*.cpp' '*.c++' '*.cxx'
+    '*.s' '*.S'
+    '*.x'
+    '*.y'
+    '*.php' '*.php3' '*.phtml');
 # Generate find parameter to find targets
 _CSCOPE_TARGET_FIND_PATTERN="-type f ( ";
 set -f
@@ -14,9 +25,15 @@ _CSCOPE_TARGET_FIND_PATTERN="${_CSCOPE_TARGET_FIND_PATTERN%-o } ) -print";
 function _cscope_build_db()
 {
 	local at=$1
+  local gen_db_cmd="cscope -bqk"
+
+  if [[ -x "$(which gtags)" ]];then
+    gen_db_cmd="gtags -f cscope.files"
+    echo "Using gtags(global) instead of cscope"
+  fi
 	echo -n "Generate cscope DB" && (
 		pushd $at > /dev/null 2>&1 &&
-		cscope -bqk &&
+		$gen_db_cmd &&
 		popd > /dev/null 2>&1
 	) && echo " -- Done" || echo " -- Failed"
 }
@@ -128,8 +145,8 @@ function _cscope-determine-sourcetree()
 		return;
 	fi
 
+  # define source type and it's subdirectories here
 	declare -A source_dirs=(
-		# define source type and it's subdirectories here
 		[linux]="arch block crypto drivers firmware fs include init ipc kernel lib mm net samples scripts security sound usr virt"
 		[gecko]="accessible b2g browser build caps chrome config content db docshell dom editor embedding extensions gfx hal image intl ipc js layout media memory mfbt mobile modules mozglue netwerk nsprpub other-licenses parser probes profile python rdf security services startupcache storage testing toolkit tools uriloader view webapprt widget xpcom xpfe xulrunner"
 		[gaia]="apps build dogfood_apps external-apps locales media-samples shared showcase_apps test_apps test_external_apps test_media tests tools"
