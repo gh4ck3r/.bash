@@ -1,6 +1,9 @@
 #!/bin/bash
 
-export GREP_OPTIONS='--exclude=cscope.* --exclude-dir=.git'
+GREP_OPTIONS='--exclude=cscope.*'
+GREP_OPTIONS+='--exclude=GPATH --exclude=GRTAGS --exclude=GSYMS --exclude=GTAGS'
+GREP_OPTIONS+='--exclude-dir=.git'
+export GREP_OPTIONS
 
 if [ -r ~/.ffos/ffos ];then
 	source ~/.ffos/ffos;
