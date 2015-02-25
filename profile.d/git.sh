@@ -10,6 +10,7 @@ function __update_git_branch_info()
 }
 
 if command -v git >/dev/null 2>&1 ;then
-  [[ "${PROMPT_COMMAND: -1}" != ';' ]] && PROMPT_COMMAND+=';'
+  [[ -v PROMPT_COMMAND && "${PROMPT_COMMAND: -1}" != ';' ]] &&
+    PROMPT_COMMAND+=';'
   PROMPT_COMMAND+="__update_git_branch_info;"
 fi
