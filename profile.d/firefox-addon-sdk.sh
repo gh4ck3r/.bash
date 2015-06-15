@@ -1,12 +1,19 @@
 #!/bin/bash
 
+_addon_sdk_dir="/opt/firefox/addon-sdk-1.17"
+if [[ -d $_addon_sdk_dir ]];then
+  pushd $_addon_sdk_dir 2>&1 > /dev/null && \
+  source bin/activate   2>&1 > /dev/null && \
+  popd                  2>&1 > /dev/null
+fi
+unset _addon_sdk_dir
+
 addon_bin=cfx
 type $addon_bin >/dev/null 2>&1 || return;
 
 # Trying to connect with nightly
-firefox_bin=/opt/firefox/firefox 
-[[ -x $firefox_bin ]] && 
-  alias $addon_bin="$addon_bin -b $firefox_bin"
+firefox_bin=/opt/firefox/developer/firefox
+[[ -x $firefox_bin ]] && alias $addon_bin="$addon_bin -b $firefox_bin"
 unset firefox_bin
 
 __cfx_subcmds="init docs run test xpi"
