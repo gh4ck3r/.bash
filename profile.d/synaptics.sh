@@ -8,6 +8,6 @@ if [[ -z "$SSH_CLIENT" ]] && [[ -x $(type -tfp synclient) ]];then
     # Palm rejection
     synclient PalmDetect=1 PalmMinWidth=5 PalmMinZ=10 2>/dev/null
     # Tap with 3 finger emulates middle click
-    synclient ClickFinger3=2 2>/dev/null
+    #synclient ClickFinger3=2 2>/dev/null
   fi
 fi
