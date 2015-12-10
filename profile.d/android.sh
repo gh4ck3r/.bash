@@ -1,7 +1,9 @@
 #!/bin/bash
 # vim: syntax=sh
-ANDROID_SDK=~/Android/sdk
-ANDROID_NDK=~/Android/ndk
+ANDROID_TOOLKIT_DIR=~/Android
+ANDROID_ADB=$ANDROID_TOOLKIT_DIR/adb
+ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
+ANDROID_NDK=$ANDROID_TOOLKIT_DIR/ndk
 
 if [[ "$PATH" != *$ANDROID_SDK/platform-tools* ]];then
 	PATH=$ANDROID_SDK/platform-tools:$PATH
@@ -9,6 +11,13 @@ fi
 if [[ "$PATH" != *$ANDROID_SDK/tools* ]];then
 	PATH=$ANDROID_SDK/tools:$PATH
 fi
+if [[ "$PATH" != *$ANDROID_ADB* ]];then
+	PATH=$ANDROID_ADB:$PATH
+fi
+unset ANDROID_TOOLKIT_DIR
+unset ANDROID_ADB
+unset ANDROID_SDK
+unset ANDROID_NDK
 
 function eclipse-at()
 {
