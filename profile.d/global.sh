@@ -5,10 +5,21 @@ function setup_global_env()
   local PATH_GLOBAL_PREFIX=/opt/global
   local PATH_GLOBAL_BIN=$PATH_GLOBAL_PREFIX/bin
 
-  if [[ -x $PATH_GLOBAL_BIN/global ]] &&
-     [[ "$PATH" != *$PATH_GLOBAL_BIN* ]];then
-    PATH=$PATH_GLOBAL_BIN:$PATH
+  if [[ -x $PATH_GLOBAL_BIN/global ]];then
+    if [[ "$PATH" != *$PATH_GLOBAL_BIN* ]];then
+      export PATH=$PATH_GLOBAL_BIN:$PATH
+    fi
+
+    # To make gtags invokes Exuberant Ctags internally
+    # https://www.gnu.org/software/global/manual/global.html#Plug_002din
+    if ! [[ -v GTAGSCONF ]];then
+      export GTAGSCONF=$PATH_GLOBAL_PREFIX/share/gtags/gtags.conf
+    fi
+    if ! [[ -v GTAGSLABEL ]];then
+      export GTAGSLABEL=ctags
+    fi
   fi
+
 }
 setup_global_env
 unset setup_global_env
