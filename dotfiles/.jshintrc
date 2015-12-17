@@ -1,0 +1,8 @@
+/* vim: set ft=javascript ts=2 et sw=2 tw=80: */
+{
+  "esnext"        : true,
+  "moz"           : true,
+  "globalstrict"  : true,
+  "globals"       : {
+  }
+}
