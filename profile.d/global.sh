@@ -9,7 +9,9 @@ function setup_global_env()
     if [[ "$PATH" != *$PATH_GLOBAL_BIN* ]];then
       export PATH=$PATH_GLOBAL_BIN:$PATH
     fi
+  fi
 
+  if type -t gtags >/dev/null 2>&1;then
     # To make gtags invokes Exuberant Ctags internally
     # https://www.gnu.org/software/global/manual/global.html#Plug_002din
     if ! [[ -v GTAGSCONF ]];then
@@ -19,7 +21,6 @@ function setup_global_env()
       export GTAGSLABEL=ctags
     fi
   fi
-
 }
 setup_global_env
 unset setup_global_env
