@@ -1,23 +1,28 @@
 #!/bin/bash
 # vim: syntax=sh
-ANDROID_TOOLKIT_DIR=~/Android
-ANDROID_ADB=$ANDROID_TOOLKIT_DIR/adb
-ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
-ANDROID_NDK=$ANDROID_TOOLKIT_DIR/ndk
 
-if [[ "$PATH" != *$ANDROID_SDK/platform-tools* ]];then
-	PATH=$ANDROID_SDK/platform-tools:$PATH
-fi
-if [[ "$PATH" != *$ANDROID_SDK/tools* ]];then
-	PATH=$ANDROID_SDK/tools:$PATH
-fi
-if [[ "$PATH" != *$ANDROID_ADB* ]];then
-	PATH=$ANDROID_ADB:$PATH
-fi
-unset ANDROID_TOOLKIT_DIR
-unset ANDROID_ADB
-unset ANDROID_SDK
-unset ANDROID_NDK
+function set_android_env()
+{
+  local ANDROID_TOOLKIT_DIR=~/Android
+  if [[ -d $ANDROID_TOOLKIT_DIR ]];then
+    local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
+    #local ANDROID_NDK=$ANDROID_TOOLKIT_DIR/ndk
+
+    if [[ -d $ANDROID_SDK ]];then
+      local platform_tools=$ANDROID_SDK/platform-tools
+      PATH=$platform_tools:$ANDROID_SDK/tools:$PATH
+
+      local adb=$platform_tools/adb
+      if [[ -x $adb ]] && [[ -w $adb ]] && ! [[ -L $adb ]];then
+        echo -e "\033[91;1mReplace adb with wrapper\033[0m : $adb"
+        mv $adb $adb.orig 2>&1 >/dev/null
+        ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
+      fi
+    fi
+  fi
+}
+set_android_env
+unset set_android_env
 
 function eclipse-at()
 {
@@ -370,7 +375,7 @@ function adb-tcpdump()
 	adb pull /data/dump.pcap
 	echo "    --> dump.pcap"
 }
- 
+
 function ndk-at()
 {
 	local ndk_inst_dir
@@ -413,7 +418,6 @@ function ndk-at()
 		export NDK=$(readlink -f $ndk_inst_dir)
 		export PATH=$NDK/bin:$PATH
 	fi
-		
 }
 
 #alias browser="adb shell am start com.android.browser"
