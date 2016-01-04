@@ -12,7 +12,7 @@ if [[ -v SSH_CLIENT ]];then
   if nc -zw1 $HOST_IP 5037 2>&1 >/dev/null  ;then
     # Host opened 5037 port
     ADB_HOST="-H $HOST_IP"
-    echo -e "Remote ADB server : \033[91;1m$HOST_IP\033[0m"
+    echo -e "Remote ADB server : \033[91;1m$HOST_IP\033[0m" 1>&2
   else
     echo "Host $HOST_IP is not offering adb-server"
     exit -1
