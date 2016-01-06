@@ -1,12 +1,12 @@
 #!/bin/bash
 # vim: syntax=sh
 
+ANDROID_TOOLKIT_DIR=~/Android
+
 function set_android_env()
 {
-  local ANDROID_TOOLKIT_DIR=~/Android
   if [[ -d $ANDROID_TOOLKIT_DIR ]];then
     local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
-    #local ANDROID_NDK=$ANDROID_TOOLKIT_DIR/ndk
 
     if [[ -d $ANDROID_SDK ]];then
       local platform_tools=$ANDROID_SDK/platform-tools
@@ -378,6 +378,11 @@ function adb-tcpdump()
 
 function ndk-at()
 {
+  if ! [[ -d $ANDROID_TOOLKIT_DIR ]];then
+    echo "No android toolkit found!!" >&2
+    return 1
+  fi
+
 	local ndk_inst_dir
 	case $# in
 		0)
@@ -385,10 +390,12 @@ function ndk-at()
 		1)
 			ndk_inst_dir=$1;;
 		*)
-			echo " Usage) ndk-at <target-directory>"
-			exit -1;
+			echo " Usage) ndk-at <target-directory>" >&2
+      return 1
 			;;
 	esac
+
+  local ANDROID_NDK=$ANDROID_TOOLKIT_DIR/ndk
 
 	if [ -d $ndk_inst_dir										\
 		-a -d $ndk_inst_dir/arm-linux-androideabi				\
@@ -409,7 +416,7 @@ function ndk-at()
 		echo "Using NDK toolkit which already installed at $ndk_inst_dir"
 	else
 		echo "Install NDK standalone toolchain at $ndk_inst_dir"
-		$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --install-dir=$ndk_inst_dir
+		$ANDROID_NDK/build/tools/make-standalone-toolchain.sh --arch=arm --platform=android-14 --install-dir=$ndk_inst_dir
 	fi
 	if [ -d $ndk_inst_dir -a -d $ndk_inst_dir/bin ];then
 		if [ -v NDK ];then
