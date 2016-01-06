@@ -1,8 +1,13 @@
 /* vim: set ft=javascript ts=2 et sw=2 tw=80: */
+// for more examples
+// https://github.com/jshint/jshint/blob/master/examples/.jshintrc
 {
+  "browser"       : true,
   "esnext"        : true,
   "moz"           : true,
   "globalstrict"  : true,
   "globals"       : {
+    "Symbol"      :true,
+    "Components"  :true
   }
 }
