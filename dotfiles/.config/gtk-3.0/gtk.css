@@ -2,39 +2,50 @@
 @define-color active-grey #333;
 @define-color border-grey #555;
 
-TerminalWindow .notebook {
-  border: 0;
-  padding: 0;
-  background-color: @dark_bg_color
+TerminalScreen {
+    -TerminalScreen-background-darkness: 0.95;
+
+    background-color: #300a24;
+
+    color: #fff;
 }
-/*
-*/
+
+TerminalWindow,
+TerminalWindow.background {
+    background-color: @dark_bg_color;
+
+    color: @dark_fg_color;
+}
 TerminalWindow .notebook {
+/*
   border: 0;
+*/
   padding: 0;
   color: #eee;
   background-color: shade(@active-grey, 1);
 }
 
 TerminalWindow .notebook tab:active {
+/*
   border: 1px solid @border-grey;
+*/
   background-color: shade(@active-grey, 1);
 }
 
 TerminalWindow .notebook tab {
   background-color: shade(@bg-grey, 1);
 }
-/*
-*/
 
 /* notebook */
 TerminalWindow .notebook {
+/*
     border: 0;
+*/
     padding: 0;
     color: #eee;
     background-image: none;
     background-color: shade (@dark_bg_color, 1.02);
-    border-radius: 6px;
+    border-radius: 3px;
 
     -unico-border-gradient: -gtk-gradient (linear, left top, right top,
                                            from (shade (@dark_bg_color, 0.93)),
@@ -79,7 +90,7 @@ TerminalWindow .notebook .button:active  {
 */
 /* Scrollbars */
 TerminalWindow .scrollbar {
-    border-radius:  20px;
+    border-radius:  200px;
 
     -unico-border-gradient: -gtk-gradient (linear, left top, left bottom,
                                            from (shade (@dark_bg_color, 0.74)),
