@@ -1,0 +1,10 @@
+[include]
+  path = .gituser
+[merge]
+	tool = vimdiff
+[color]
+	ui = auto
+[core]
+	excludesfile = ~/.gitignore
+[push]
+	default = simple

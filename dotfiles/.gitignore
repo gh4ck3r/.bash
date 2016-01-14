@@ -1,0 +1,8 @@
+# cscope meta files
+cscope.files
+cscope.*out
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
