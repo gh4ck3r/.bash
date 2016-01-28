@@ -58,4 +58,5 @@ fi
 
 export GREP_COLORS='fn=01;36:ln=01;32'
 
-bind '\C-f:unix-filename-rubout'
+stty werase undef
+bind '\C-w:unix-filename-rubout'
