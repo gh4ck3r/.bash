@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/changbin.park/Android/sdk/platform-tools/adb.orig -a --reply-fd 3 fork-server server 3>&2
