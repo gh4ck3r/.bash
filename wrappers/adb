@@ -19,4 +19,10 @@ if [[ -v SSH_CLIENT ]];then
   fi
 fi
 
-exec $ADB_BIN $ADB_HOST "$@"
+case ${1} in
+  logcat)
+    ADDITIONAL_OPTIONS="-v color"
+    ;;
+esac
+
+exec $ADB_BIN $ADB_HOST $1 $ADDITIONAL_OPTIONS ${@#$1}
