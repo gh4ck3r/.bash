@@ -18,6 +18,7 @@ function set_android_env()
         mv $adb $adb.orig 2>&1 >/dev/null
         ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
       fi
+      alias adb=$adb
     fi
   fi
 }
