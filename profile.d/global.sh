@@ -1,10 +1,5 @@
 #!/bin/bash
 
-GREP_OPTIONS='--exclude=cscope.*'
-GREP_OPTIONS+=' --exclude=GPATH --exclude=GRTAGS --exclude=GSYMS --exclude=GTAGS'
-GREP_OPTIONS+=' --exclude-dir=.git'
-export GREP_OPTIONS
-
 function setup_global_env()
 {
   local PATH_GLOBAL_PREFIX=/opt/global

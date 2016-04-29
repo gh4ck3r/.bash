@@ -56,7 +56,5 @@ if [ -x /usr/bin/rhythmbox ];then
 	export GST_TAG_ENCODING
 fi
 
-export GREP_COLORS='fn=01;36:ln=01;32'
-
 stty werase undef
 bind '\C-w:unix-filename-rubout'
