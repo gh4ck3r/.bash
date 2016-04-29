@@ -1,26 +1,24 @@
 #!/bin/bash
-# vim: syntax=sh
 
 ANDROID_TOOLKIT_DIR=~/Android
+[[ -d $ANDROID_TOOLKIT_DIR ]] || return
 
 function set_android_env()
 {
-  if [[ -d $ANDROID_TOOLKIT_DIR ]];then
-    local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
+  local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
 
-    if [[ -d $ANDROID_SDK ]];then
-      local platform_tools=$ANDROID_SDK/platform-tools
-      PATH=$platform_tools:$ANDROID_SDK/tools:$PATH
+  [[ -d $ANDROID_SDK ]] || return
+  local platform_tools=$ANDROID_SDK/platform-tools
+  PATH=$platform_tools:$ANDROID_SDK/tools:$PATH
 
-      local adb=$platform_tools/adb
-      if [[ -x $adb ]] && [[ -w $adb ]] && ! [[ -L $adb ]];then
-        echo -e "\033[91;1mReplace adb with wrapper\033[0m : $adb"
-        mv $adb $adb.orig 2>&1 >/dev/null
-        ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
-      fi
-      alias adb=$adb
-    fi
-  fi
+  local adb=$platform_tools/adb
+  alias adb=$adb
+
+  [[ -x $adb ]] && [[ -w $adb ]] && ! [[ -L $adb ]] || return
+  echo -e "\033[91;1mReplace adb with wrapper\033[0m : $adb"
+  mv $adb $adb.orig 2>&1 >/dev/null
+  ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
+
 }
 set_android_env
 unset set_android_env
@@ -379,11 +377,6 @@ function adb-tcpdump()
 
 function ndk-at()
 {
-  if ! [[ -d $ANDROID_TOOLKIT_DIR ]];then
-    echo "No android toolkit found!!" >&2
-    return 1
-  fi
-
 	local ndk_inst_dir
 	case $# in
 		0)
