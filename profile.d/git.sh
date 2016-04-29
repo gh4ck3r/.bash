@@ -1,5 +1,11 @@
 #!/bin/bash
 
+type git >/dev/null 2>&1 || return
+
+[[ -v PROMPT_COMMAND && "${PROMPT_COMMAND: -1}" != ';' ]] &&
+  PROMPT_COMMAND+=';'
+PROMPT_COMMAND+="__update_git_branch_info;"
+
 function __update_git_branch_info()
 {
   PS1=$__PS1_PREFIX;
@@ -9,8 +15,3 @@ function __update_git_branch_info()
   PS1+=$__PS1_SUFFIX;
 }
 
-if command -v git >/dev/null 2>&1 ;then
-  [[ -v PROMPT_COMMAND && "${PROMPT_COMMAND: -1}" != ';' ]] &&
-    PROMPT_COMMAND+=';'
-  PROMPT_COMMAND+="__update_git_branch_info;"
-fi
