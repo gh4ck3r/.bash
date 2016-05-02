@@ -1,0 +1,49 @@
+#!/bin/bash
+
+if ! git_dir=$(git rev-parse --git-dir 2>&-);then exit;fi
+hooks_dir=$git_dir/hooks
+
+case "$#" in
+  0)
+    for hook in $hooks_dir/*;do
+      if [[ $hook = *.sample ]];then
+        echo -e "\033[2m$(basename $hook)\033[0m";
+      else
+        echo -e "\033[91;1m$(basename $hook)\033[0m";
+        #echo "$(basename $hook)"
+      fi
+    done
+    ;;
+
+  1)
+    EDITOR=$(git config core.editor)
+    if [[ $EDITOR = vi* ]]; then
+      EDITOR_OPTION="-O"
+    fi
+    TARGET_HOOK=$hooks_dir/$1
+    $EDITOR $EDITOR_OPTION "$TARGET_HOOK"
+    ;;
+
+  *)
+    # TODO : Usage
+    ;;
+esac
+
+# Full hook list
+# applypatch-msg
+# pre-applypatch
+# post-applypatch
+# pre-commit
+# prepare-commit-msg
+# commit-msg
+# post-commit
+# pre-rebase
+# post-checkout
+# post-merge
+# pre-receive
+# update
+# post-receive
+# post-update
+# pre-auto-gc
+# post-rewrite
+# pre-push
