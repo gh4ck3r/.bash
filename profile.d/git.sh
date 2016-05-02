@@ -39,7 +39,7 @@ function setup_git_custom_commands()
     echo "Some custom git commands can't be installed"
     for cmd in $git_custom_cmds;do
       cmd=$(basename $cmd);
-      echo " - ${cmd/-/ }"
+      echo -e "  * \033[91;1m$(basename $cmd)\033[0m"
     done
     return
   fi
