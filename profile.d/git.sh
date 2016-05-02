@@ -45,7 +45,8 @@ function setup_git_custom_commands()
   fi
 
   for cmd in $git_custom_cmds;do
-    echo "Planting git custom command : $cmd --> $git_exec_path"
+    echo "Planting git custom command(s) into $git_exec_path"
+    echo -e "  * \033[91;1m$(basename $cmd)\033[0m"
 
     if $cmd_prefix ln -s $cmd $git_exec_path/;then
       echo " -- Ok"
