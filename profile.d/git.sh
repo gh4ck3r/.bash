@@ -20,14 +20,19 @@ function setup_git_custom_commands()
   local git_custom_cmds=$__bashrc_dir/wrappers/git/git-*
   [[ $(ls $git_custom_cmds 2>&- | wc -l) = 0 ]] && return
 
+  local git_exec_path_proxy=$HOME/.git-exec-path-proxy;
+  if [[ -d $git_exec_path_proxy ]];then
+    export GIT_EXEC_PATH=$git_exec_path_proxy
+  fi
   local git_exec_path=$(git --exec-path)
+
   git_custom_cmds=($git_custom_cmds)
   for cmd in $git_custom_cmds;do
     if [[ $(readlink -e $git_exec_path/$(basename $cmd)) = $cmd ]]; then
       git_custom_cmds=${git_custom_cmds#$cmd}
     fi
   done
-  [[ -z "$git_custom_cmds" ]] && return
+  [[ -z $git_custom_cmds ]] && return
 
   local cmd_prefix;
   local cmd_postfix;
@@ -35,25 +40,26 @@ function setup_git_custom_commands()
     :
   elif im_sudoer;then
     cmd_prefix="sudo"
-  else
-    echo "Some custom git commands can't be installed"
-    for cmd in $git_custom_cmds;do
-      cmd=$(basename $cmd);
-      echo -e "  * \033[91;1m$(basename $cmd)\033[0m"
+  elif [[ $git_exec_path_proxy != $GIT_EXEC_PATH ]]; then
+    echo "Make Git exec-path proxy : $git_exec_path_proxy"
+    [[ -d $git_exec_path_proxy ]] || mkdir -p $git_exec_path_proxy
+    for f in $git_exec_path/*; do
+      if [[ $(readlink -e $git_exec_path_proxy/$(basename $f)) = $f ]];then continue;fi
+      ln -s $f $git_exec_path_proxy/
     done
-    return
+    git_exec_path=$git_exec_path_proxy
+    export GIT_EXEC_PATH=$git_exec_path_proxy
   fi
 
   for cmd in $git_custom_cmds;do
     echo "Planting git custom command(s) into $git_exec_path"
-    echo -e "  * \033[91;1m$(basename $cmd)\033[0m"
+    echo -en "  * \033[91;1m$(basename $cmd)\033[0m"
 
-    if $cmd_prefix ln -s $cmd $git_exec_path/;then
+    if $cmd_prefix ln -s $cmd $git_exec_path/ 2>&- ;then
       echo " -- Ok"
     else
       echo " -- Failed"
     fi
-
   done
 }
 setup_git_custom_commands
