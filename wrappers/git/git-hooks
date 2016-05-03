@@ -1,6 +1,9 @@
 #!/bin/bash
 
-if ! git_dir=$(git rev-parse --git-dir 2>&-);then exit;fi
+if ! git_dir=$(git rev-parse --git-dir 2>&-);then
+  echo "fatal: Not a git repository (or any parent up to mount point $(dirname $PWD))" >&2
+  exit;
+fi
 hooks_dir=$git_dir/hooks
 
 case "$#" in
