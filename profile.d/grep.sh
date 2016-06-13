@@ -11,3 +11,20 @@ unset exclude_dirs;
 
 export GREP_OPTIONS
 export GREP_COLORS='fn=01;36:ln=01;32'
+
+function highlight()
+{
+  local pattern="^"
+  while [[ $# -gt 1 ]];do
+    pattern+="|$1"
+    shift
+  done
+
+  if [[ -r $1 ]];then
+    local filename="$1"
+  else
+    pattern+="|$1"
+  fi
+
+  grep -E "$pattern" $filename
+}
