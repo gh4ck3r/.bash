@@ -21,7 +21,8 @@ fi
 
 case ${1} in
   logcat)
-    ADDITIONAL_OPTIONS="-v color"
+    # Append color option only when STDOUT(1) is not redirected
+    [[ -t 1 ]] && ADDITIONAL_OPTIONS="-v color"
     ;;
 esac
 
