@@ -33,7 +33,6 @@ case "$#" in
         echo -e "\033[2m$(basename $hook)\033[0m";
       else
         echo -e "\033[91;1m$(basename $hook)\033[0m";
-        #echo "$(basename $hook)"
       fi
     done
     ;;
@@ -43,12 +42,16 @@ case "$#" in
       echo Error
       [[ $SHLVL = 1 ]] && return || exit 124
     fi
+    TARGET_HOOK=$hooks_dir/$1
+
     EDITOR=$(git config core.editor)
     if [[ $EDITOR = vi* ]]; then
-      EDITOR_OPTION="-O"
+      if ! [[ -f $TARGET_HOOK ]] && [[ -f $TARGET_HOOK.sample ]];then
+        EDITOR_OPTION+="+read $TARGET_HOOK.sample"
+      fi
     fi
-    TARGET_HOOK=$hooks_dir/$1
-    $EDITOR $EDITOR_OPTION "$TARGET_HOOK"
+
+    $EDITOR "$EDITOR_OPTION" "$TARGET_HOOK"
     ;;
 
   *)
