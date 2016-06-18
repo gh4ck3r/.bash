@@ -47,7 +47,7 @@ case "$#" in
     EDITOR=$(git config core.editor)
     if [[ $EDITOR = vi* ]]; then
       if ! [[ -f $TARGET_HOOK ]] && [[ -f $TARGET_HOOK.sample ]];then
-        EDITOR_OPTION+="+read $TARGET_HOOK.sample"
+        EDITOR_OPTION+="+read $TARGET_HOOK.sample | filetype detect"
       fi
     fi
 
