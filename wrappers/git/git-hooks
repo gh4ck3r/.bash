@@ -58,6 +58,16 @@ case "$#" in
 
   *)
     # TODO : Usage
+    cat >&2 <<EOF
+Usage) git hooks [hook]
+  Show or edit githooks.
+
+  List hooks in \$GIT_DIR/hooks, if [hook] is omitted. Otherwise, Edit [hook]
+  with git editor. Contents of *.sample file will be shown if there's *.sample
+  and no hook is set.
+
+  See man githooks(5) for more detail about available hooks for git.
+EOF
     ;;
 esac
 
