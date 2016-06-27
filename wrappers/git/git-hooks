@@ -45,13 +45,15 @@ case "$#" in
     TARGET_HOOK=$hooks_dir/$1
 
     EDITOR=$(git config core.editor)
+    declare -a EDITOR_OPTION
     if [[ $EDITOR = vi* ]]; then
       if ! [[ -f $TARGET_HOOK ]] && [[ -f $TARGET_HOOK.sample ]];then
-        EDITOR_OPTION+="+read $TARGET_HOOK.sample | filetype detect"
+        EDITOR_OPTION[${#EDITOR_OPTION[@]}]+="+read $TARGET_HOOK.sample"
+        EDITOR_OPTION[${#EDITOR_OPTION[@]}]+="+filetype detect"
       fi
     fi
 
-    $EDITOR "$EDITOR_OPTION" "$TARGET_HOOK"
+    $EDITOR "${EDITOR_OPTION[@]}" $TARGET_HOOK
     ;;
 
   *)
