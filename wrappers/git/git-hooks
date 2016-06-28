@@ -2,12 +2,12 @@
 
 if ! git_dir=$(git rev-parse --git-dir 2>&-);then
   echo "fatal: Not a git repository (or any parent up to mount point $(dirname $PWD))" >&2
-  exit;
+  exit 1;
 fi
 hooks_dir=$git_dir/hooks
 
 # Full hook list
-valid_hooks=(
+VALID_HOOKS=(
   applypatch-msg
   pre-applypatch
   post-applypatch
@@ -26,48 +26,71 @@ valid_hooks=(
   post-rewrite
   pre-push
 )
-case "$#" in
-  0)
-    for hook in $hooks_dir/*;do
-      if [[ $hook = *.sample ]];then
-        echo -e "\033[2m$(basename $hook)\033[0m";
-      else
-        echo -e "\033[91;1m$(basename $hook)\033[0m";
-      fi
-    done
-    ;;
 
-  1)
-    if ! ( [[ ${valid_hooks[@]} = *\ $1* ]] || [[ ${valid_hooks[@]} = *$1\ * ]]);then
-      echo Error
-      [[ $SHLVL = 1 ]] && return || exit 124
-    fi
-    TARGET_HOOK=$hooks_dir/$1
-
-    EDITOR=$(git config core.editor)
-    declare -a EDITOR_OPTION
-    if [[ $EDITOR = vi* ]]; then
-      if ! [[ -f $TARGET_HOOK ]] && [[ -f $TARGET_HOOK.sample ]];then
-        EDITOR_OPTION[${#EDITOR_OPTION[@]}]+="+read $TARGET_HOOK.sample"
-        EDITOR_OPTION[${#EDITOR_OPTION[@]}]+="+filetype detect"
-      fi
-    fi
-
-    $EDITOR "${EDITOR_OPTION[@]}" $TARGET_HOOK
-    ;;
-
-  *)
-    # TODO : Usage
-    cat >&2 <<EOF
-Usage) git hooks [hook]
+function usage()
+{
+  cat >&2 <<EOF
+Usage) git hooks [hook-name]...
   Show or edit githooks.
 
-  List hooks in \$GIT_DIR/hooks, if [hook] is omitted. Otherwise, Edit [hook]
-  with git editor. Contents of *.sample file will be shown if there's *.sample
-  and no hook is set.
+  List hooks in \$GIT_DIR/hooks, if [hook-name] is omitted. Otherwise, Edit
+  [hook-name] with git editor. Contents of *.sample file will be shown if
+  there's *.sample and no hook is set.
 
   See man githooks(5) for more detail about available hooks for git.
 EOF
-    ;;
-esac
+}
+
+eval set -- "$(getopt --name "git hooks" -l "help::" -o "h::" -- $@)"
+while :; do
+  case "$1" in
+    -h|--help)
+      usage
+      [[ $SHLVL = 1 ]] && return || exit
+      ;;
+    --) shift;break;;
+    *)
+      echo "Unkonwn option : -$OPTARG" >&2
+      [[ $SHLVL = 1 ]] && return 2 || exit 2
+  esac
+done
+
+if [[ $# == 0 ]];then
+  for hook in $hooks_dir/*;do
+    if [[ $hook = *.sample ]];then
+      echo -e "\033[2m$(basename $hook)\033[0m";
+    else
+      echo -e "\033[91;1m$(basename $hook)\033[0m";
+    fi
+  done
+else
+  EDITOR=$(git config core.editor)
+  declare -a EDITOR_OPTION LISTED_HOOKS
+  while [[ $# -gt 0 ]];do
+    if ! [[ " ${LISTED_HOOKS[@]} " == *" $1 "* ]];then
+      LISTED_HOOKS[${#LISTED_HOOKS[@]}]=$1
+
+      if ! [[ " ${VALID_HOOKS[@]} " == *" $1 "* ]];then
+        echo "Unknown hook : $1" >&2;
+        [[ $SHLVL = 1 ]] && return 3 || exit 3
+      fi
+
+      TARGET_HOOK=$hooks_dir/$1
+      if [[ $EDITOR = vi* ]]; then
+        EDITOR_OPTION[${#EDITOR_OPTION[@]}]="+wincmd w"
+
+        if ! [[ -f $TARGET_HOOK ]] && [[ -f $TARGET_HOOK.sample ]];then
+          EDITOR_OPTION[${#EDITOR_OPTION[@]}]="+0r $TARGET_HOOK.sample | filetype detect"
+        fi
+      fi
+
+      EDITOR_OPTION[${#EDITOR_OPTION[@]}]="$TARGET_HOOK"
+    fi
+
+    shift
+  done
+
+  EDITOR_OPTION[0]="-O"
+  $EDITOR "${EDITOR_OPTION[@]}"
+fi
 
