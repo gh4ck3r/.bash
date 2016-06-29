@@ -1,2 +1,13 @@
 #!/bin/bash
-exec /home/changbin.park/Android/sdk/platform-tools/adb.orig -a --reply-fd 3 fork-server server 3>&2
+# FIXME
+# Launching adb fork-server server directly from command line is failed
+# sometimes. When this is launched from "Startup Applications" of Ubuntu, it
+# just works. But, in Bash, it's not working since calling "setsid()" is failed.
+#   Workaround) 'bash -c "adb-server 3>&2" & sleep .5 && kill %1'
+exec -a adb-server \
+  /home/changbin.park/Android/sdk/platform-tools/adb.orig \
+  -a \
+  --reply-fd 3 \
+  fork-server \
+  server \
+  3>&2
