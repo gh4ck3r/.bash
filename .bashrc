@@ -29,6 +29,8 @@ __PS1_SUFFIX=' \[\e[36;1m\]\W\[\e[01;32m\]]\$\[\e[0m\] '
 PS1=$__PS1_PREFIX$__PS1_SUFFIX
 export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]}: '
 
+export TERM=xterm-256color
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
