@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Append GREP_OPTIONS to alias of grep
+IFS=\= read unused GREP_OPTIONS <<< $(alias grep)
+unset unused
+GREP_OPTIONS=${GREP_OPTIONS:1:-1} # trim single quotes
+
 declare -a exclude_files=(cscope.* GPATH GRTAGS GSYMS GTAGS)
 declare -a exclude_dirs=(.git)
 
@@ -9,7 +14,9 @@ unset exclude_files;
 for d in ${exclude_dirs[*]};do GREP_OPTIONS+=" --exclude-dir=$d";done
 unset exclude_dirs;
 
-export GREP_OPTIONS
+alias grep="$GREP_OPTIONS"
+unset GREP_OPTIONS
+
 export GREP_COLORS='fn=01;36:ln=01;32'
 
 function highlight()
