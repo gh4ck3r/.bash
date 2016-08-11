@@ -2,6 +2,8 @@
 
 function link_dot_files()
 {
+  unset link_dot_files;
+
   local DOTFILES_ROOT=$__bashrc_dir/dotfiles
   local shopt_cmd="shopt -p nullglob dotglob globstar"
 
@@ -23,6 +25,7 @@ function link_dot_files()
           rc_file_dir+=${rc_file_fullpath%/*}
         fi
 
+        mkdir -p $rc_file_dir
         ln -s -t $rc_file_dir $f
       fi
     fi
@@ -31,4 +34,3 @@ function link_dot_files()
   eval "$orig_shopt"
 }
 link_dot_files
-unset link_dot_files
