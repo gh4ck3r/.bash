@@ -2,7 +2,7 @@
 
 [[ -x $(which sdcv) ]] || return;
 
-[[ -x $(which colorit) ]] && SDCV_PAGER="colorit | ";
+SDCV_PAGER="$__bashrc_dir/tools/colorit | ";
 SDCV_PAGER+="less -R"
 
 export SDCV_PAGER
