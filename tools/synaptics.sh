@@ -1,7 +1,6 @@
-# Synaptics TouchPad driver settings
+#!/bin/bash
 
-# Skip if the session is on ssh
-[[ -v SSH_CLIENT ]] && return
+# Synaptics TouchPad driver settings
 
 type -t synclient >/dev/null 2>&1 || return
 
@@ -19,7 +18,8 @@ if [[ $(synclient -V) < 1.9 ]]; then
   # Apply values of 'LeftEdge' and 'RightEdge' to 'AreaLeftEdge' and
   # 'AreaRightEdge' respectively
   if [[ $(hostname) = 'cpark-xps' ]];then
-    synclient LeftEdge=48 RightEdge=1168
+    # id 12 comes from xinput -list
+    xinput set-prop 12 "Device Enabled" 0 && xinput set-prop 12 "Device Enabled" 1
   fi
   synclient $(synclient | grep -e '\<\(Left\|Right\)Edge\>' | sed -e 's/\(\w\+\)\s*=\s*\([0-9]\+\)/Area\1=\2/') 2>/dev/null
 else

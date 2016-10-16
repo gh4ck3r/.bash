@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/cpark/.bash/tools/synaptics.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Init Touchpad
+Comment=Turn off and on touch pad to initialize driver
