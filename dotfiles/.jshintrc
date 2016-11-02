@@ -7,7 +7,9 @@
   "moz"           : true,
   "globalstrict"  : true,
   "globals"       : {
-    "Symbol"      :true,
+    "console"     : true,
+    "alert"       : true,
+    "Symbol"      : true,
     "Components"  :true
   }
 }
