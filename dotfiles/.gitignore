@@ -6,3 +6,4 @@ GRTAGS
 GSYMS
 GTAGS
 gmon.out
+/node_modules
