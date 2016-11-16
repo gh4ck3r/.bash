@@ -137,6 +137,21 @@ function _cscope-b2g-at()
 	fi
 }
 
+function _cscope-nodejs-prj-at()
+{
+  local at=$1
+	local list_file="$at/cscope.files"
+	echo "Generate file list of nodejs project for cscope at $at"
+
+	set -f
+	find $at \
+		-path "$at/node_modules" -prune -o \
+		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+	set +f
+
+	_cscope_build_db $at
+}
+
 function _cscope-determine-sourcetree()
 {
 	local target=$1
@@ -151,6 +166,7 @@ function _cscope-determine-sourcetree()
 		[gecko]="accessible b2g browser build caps chrome config content db docshell dom editor embedding extensions gfx hal image intl ipc js layout media memory mfbt mobile modules mozglue netwerk nsprpub other-licenses parser probes profile python rdf security services startupcache storage testing toolkit tools uriloader view webapprt widget xpcom xpfe xulrunner"
 		[gaia]="apps build dogfood_apps external-apps locales media-samples shared showcase_apps test_apps test_external_apps test_media tests tools"
 		[b2g]="abi build development gaia hardware librecovery ndk prebuilt system bionic device external gecko kernel vendor bootable frameworks gonk-misc libcore build/envsetup.sh"
+    [nodejs-prj]="node_modules"
 	)
 	for type in ${!source_dirs[@]};do
 		local found=true
