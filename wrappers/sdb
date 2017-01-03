@@ -1,0 +1,51 @@
+#!/bin/bash
+
+SDB_BIN=${BASH_SOURCE[0]}.orig
+
+if [[ ! -x $SDB_BIN ]];then
+  echo "$SDB_BIN is not exist" >&2
+  exit -1
+fi
+
+function color()
+{
+  local codes;
+  while [[ $# > 0 ]];do
+    case $1 in
+      red* | green* | yellow* | blue* | magenta* | cyan* | white*)
+        [[ ${1: -3} == _bg ]] && codes+=4 || codes+=3;
+        case $1 in
+          red*)     codes+="1;";;
+          green*)   codes+="2;";;
+          yellow*)  codes+="3;";;
+          blue*)    codes+="4;";;
+          magenta*) codes+="5;";;
+          cyan*)    codes+="6;";;
+          white*)   codes+="7;";;
+        esac;;
+      reset)    codes+="0;";;
+      bold)     codes+="1;";;
+    esac
+
+
+    shift
+  done
+  echo -ne "\e[${codes::-1}m"
+}
+
+if [[ ${1} == "dlog" ]] && [[ -t 1 ]];then
+  exec -a sdb $SDB_BIN ${@} | while read line; do
+    case ${line:0:1} in
+      V) color bold white;;
+      D) color bold blue;;
+      I) color bold green;;
+      W) color bold yellow;;
+      E) color bold red;;
+      F) color bold white red_bg;;
+    esac
+    echo "$line"
+    color reset;
+  done;
+else
+  exec -a sdb $SDB_BIN ${@}
+fi

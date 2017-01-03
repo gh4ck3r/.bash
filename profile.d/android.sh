@@ -21,7 +21,6 @@ function set_android_env()
   echo -e "\033[91;1mReplace adb with wrapper\033[0m : $adb"
   mv $adb $adb.orig 2>&1 >/dev/null
   ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
-
 }
 set_android_env
 unset set_android_env
