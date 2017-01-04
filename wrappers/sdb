@@ -34,7 +34,8 @@ function color()
 }
 
 if [[ ${1} == "dlog" ]] && [[ -t 1 ]];then
-  exec -a sdb $SDB_BIN ${@} | while read line; do
+  exec -a sdb $SDB_BIN ${@} |
+  while IFS='' read line; do
     case ${line:0:1} in
       V) color bold white;;
       D) color bold blue;;
