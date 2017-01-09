@@ -41,8 +41,7 @@ if [[ ${1} == "dlog" ]];then
                       [F]=$(color bold white red_bg)
                       [R]=$(color reset));
 
-  exec -a sdb $SDB_BIN ${@} |
-  while IFS='' read line; do
+  while exec -a "color-sdb" IFS='' read line; do
     level='unknown';
     if [[ ${line} =~ ^([VDIWEF])([/\(]| P) ]] ||
        [[ ${line} =~ ^\[DLOG\][[:space:]]*[0-9]+\.[0-9]+[[:space:]]([VDIWEF])/ ]] ||
@@ -51,7 +50,7 @@ if [[ ${1} == "dlog" ]];then
     fi
     color=${colors[$level]};
     echo "${color}$line${color:+${colors[R]}}";
-  done;
+  done <<< $(exec -a "sdb" $SDB_BIN ${@})
 else
   exec -a sdb $SDB_BIN ${@}
 fi
