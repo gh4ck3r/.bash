@@ -8,7 +8,6 @@ export PATH+=":$TIZEN_SDK_HOME/tools:$TIZEN_SDK_HOME/tools/ide/bin"
 function set_tizen_env()
 {
   local sdb=$TIZEN_SDK_HOME/tools/sdb;
-  alias sdb=$sdb;
 
   [[ -x $sdb ]] && [[ -w $sdb ]] && ! [[ -L $sdb ]] || return;
   echo -e "\033[91;1mReplace sdb with wrapper\033[0m : $sdb"
