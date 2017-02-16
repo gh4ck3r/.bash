@@ -42,10 +42,14 @@ function _cscope-unknown-at()
 {
 	local at=$1
 	local list_file="$at/cscope.files"
-	echo "Generate file list for cscope at $at"
-	set -f
-	find $at $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-	set +f
+  if [ -r $list_file ];then
+    echo "Use existing list file : $list_file"
+  else
+    echo "Generate file list for cscope at $at"
+    set -f
+    find $at $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+    set +f
+  fi
 
 	_cscope_build_db $at
 }
@@ -55,20 +59,24 @@ function _cscope-linux-at()
 	local at=$1
 	local list_file="$at/cscope.files"
 
-	echo "Generate file list of linux kernel for cscope at $at"
-	set -f
-	find $at \
-		-type d \
-			-path "$at/include/asm-*" \
-			! -path "$at/include/asm-arm*" \
-			! -path "$at/include/asm-generic*" \
-			-prune -o \
-		-type d \
-			-path "$at/arch/*" \
-			! -path "$at/arch/arm*" \
-			-prune -o \
-		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-	set +f
+  if [ -r $list_file ];then
+    echo "Use existing file list of linux kernel for cscope at $list_file"
+  else
+    echo "Generate file list of linux kernel for cscope at $at"
+    set -f
+    find $at \
+      -type d \
+        -path "$at/include/asm-*" \
+        ! -path "$at/include/asm-arm*" \
+        ! -path "$at/include/asm-generic*" \
+        -prune -o \
+      -type d \
+        -path "$at/arch/*" \
+        ! -path "$at/arch/arm*" \
+        -prune -o \
+      $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+    set +f
+  fi
 	_cscope_build_db $at
 }
 
@@ -76,13 +84,17 @@ function _cscope-gaia-at()
 {
 	local at=$1
 	local list_file="$at/cscope.files"
-	echo "Generate file list of gaia for cscope at $at"
-	set -f
-	find $at \
-		-path "$at/xulrunner-sdk*" -prune -o \
-		-path "$at/xulrunner" -prune -o \
-		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-	set +f
+  if [ -r $list_file ];then
+    echo "Use existing file list of gaia for cscope at $list_file"
+  else
+    echo "Generate file list of gaia for cscope at $at"
+    set -f
+    find $at \
+      -path "$at/xulrunner-sdk*" -prune -o \
+      -path "$at/xulrunner" -prune -o \
+      $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+    set +f
+  fi
 
 	_cscope_build_db $at
 }
@@ -91,17 +103,21 @@ function _cscope-gecko-at()
 {
 	local at=$1
 	local list_file="$at/cscope.files"
-	echo "Generate file list of gecko for cscope at $at"
-	set -f
-	find $at \
-		-path "$at/python" -prune -o \
-		-path "$at/*test" -prune -o \
-		-path "$at/*tests" -prune -o \
-		-path "$at/*testing" -prune -o \
-		-path "$at/*gtk2" -prune -o \
-		-path "$at/*mswindows" -prune -o \
-		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-	set +f
+  if [ -r $list_file ];then
+    echo "Use existing file list of gecko for cscope at $list_file"
+  else
+    echo "Generate file list of gecko for cscope at $at"
+    set -f
+    find $at \
+      -path "$at/python" -prune -o \
+      -path "$at/*test" -prune -o \
+      -path "$at/*tests" -prune -o \
+      -path "$at/*testing" -prune -o \
+      -path "$at/*gtk2" -prune -o \
+      -path "$at/*mswindows" -prune -o \
+      $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+    set +f
+  fi
 
 	_cscope_build_db $at
 }
@@ -141,13 +157,17 @@ function _cscope-nodejs-prj-at()
 {
   local at=$1
 	local list_file="$at/cscope.files"
-	echo "Generate file list of nodejs project for cscope at $at"
+  if [ -r $list_file ];then
+    echo "Use existing file list of nodejs project for cscope at $list_file"
+  else
+    echo "Generate file list of nodejs project for cscope at $at"
 
-	set -f
-	find $at \
-		-path "$at/node_modules" -prune -o \
-		$_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
-	set +f
+    set -f
+    find $at \
+      -path "$at/node_modules" -prune -o \
+      $_CSCOPE_TARGET_FIND_PATTERN > "$list_file"
+    set +f
+  fi
 
 	_cscope_build_db $at
 }
