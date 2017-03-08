@@ -6,6 +6,8 @@
   "esnext"        : true,
   "moz"           : true,
   "globalstrict"  : true,
+  "unused"        : true,
+  "undef"         : true,
   "globals"       : {
     "console"     : true,
     "alert"       : true,
