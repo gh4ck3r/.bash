@@ -1,6 +1,7 @@
 # cscope meta files
 cscope.files
 cscope.*out
+gtags.files
 GPATH
 GRTAGS
 GSYMS
