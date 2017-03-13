@@ -1,14 +1,5 @@
 #!/bin/bash
 
-function _gtags_build_db()
-{
-	echo -n "Generate gtags DB" && (
-		pushd $1 > /dev/null 2>&1 &&
-		gtags &&
-		popd > /dev/null 2>&1
-	) && echo " -- Done" || echo " -- Failed"
-}
-
 function gtags-at()
 {
 	local at=$(readlink -e ${1:-$PWD});
@@ -29,9 +20,29 @@ function gtags-at()
     done
   fi
 
-  _gtags_build_db "$at"
+	echo -n "Generate gtags DB" && (
+		pushd $1 > /dev/null 2>&1 &&
+		gtags &&
+		popd > /dev/null 2>&1
+	) && echo " -- Done" || echo " -- Failed"
+
   local db="$at/cscope.out"
   if [ -f $db ] && [[ "$CSCOPE_DB" != *$db* ]];then
     export CSCOPE_DB+=${CSCOPE_DB:+:}$db;
+  fi
+}
+
+function gtags-clean() {
+  local db_path=$(global -qp)
+
+  if [[ -d $db_path ]] && [[ -x $db_path ]];then
+    echo "Clean gtags files at $db_path";
+    rm -f $db_path/GTAGS \
+          $db_path/GRTAGS \
+          $db_path/GPATH \
+          $db_path/gtags.files \
+          > /dev/null;
+  else
+    echo "No global DB here..";
   fi
 }
