@@ -4,10 +4,14 @@
 
 type -t synclient >/dev/null 2>&1 || return
 
+# Gram : Elantech Touchpad
+# XPS13 : DLL075B:01 06CB:76AF Touchpad
 xinput -list 2>/dev/null |
-  grep --fixed-strings \
-    -e "Synaptics TouchPad" \
-    -e "Elantech Touchpad" >/dev/null 2>&1 || return
+  grep --fixed-strings "
+Synaptics TouchPad
+Elantech Touchpad
+DLL075B:01 06CB:76AF Touchpad
+" >/dev/null 2>&1 || return
 
 # 2 finger scroll
 synclient HorizTwoFingerScroll=1 VertTwoFingerScroll=1 EmulateTwoFingerMinZ=40 EmulateTwoFingerMinW=8 2>/dev/null
@@ -28,4 +32,4 @@ else
   echo "Failed to ignore left/right edge area of touchpad" >&2
 fi
 # Tap with 3 finger emulates middle click
-#synclient ClickFinger3=2 2>/dev/null
+synclient ClickFinger3=2 2>/dev/null
