@@ -14,7 +14,18 @@ function __update_git_branch_info()
     if [[ $(git ls-remote --get-url origin 2>/dev/null) == *github.com* ]]; then
       local origin=" "
     fi
-    PS1+=':\[\e[01;93m\]'$origin'⎇ '$branch
+    if git diff-index --quiet HEAD --;then
+      # No changes
+      PS1+=':\[\e[1;33m\]'$origin'⎇ '$branch
+    else
+      if [[ $(git diff --numstat | wc -l) != 0 ]];then
+        # Unstaged changes
+        PS1+=':\[\e[1;31m\]'$origin'⎇ '$branch
+      else
+        # Only staged changes
+        PS1+=':\[\e[0;32m\]'$origin'⎇ '$branch
+      fi
+    fi
   fi
   PS1+=$__PS1_SUFFIX;
 }
