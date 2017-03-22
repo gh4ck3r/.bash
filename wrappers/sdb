@@ -52,5 +52,5 @@ if [[ ${1} == "dlog" ]];then
     echo "${color}$line${color:+${colors[R]}}";
   done
 else
-  exec -a sdb $SDB_BIN ${@}
+  exec -a sdb $SDB_BIN "$@"
 fi
