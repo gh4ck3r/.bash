@@ -11,8 +11,18 @@ function __update_git_branch_info()
   PS1=$__PS1_PREFIX;
   local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null);
   if [[ -n $branch ]];then
-    if [[ $(git ls-remote --get-url origin 2>/dev/null) == *github.com* ]]; then
-      local origin=" "
+    local origin;
+    case $(git ls-remote --get-url origin 2>/dev/null) in
+      *github.com*)
+        origin=" "
+        ;;
+      *corpzone.internalzone.com*)
+        origin=""
+        ;;
+    esac
+
+    if [[ $origin_url == *github.com* ]]; then
+      origin=" "
     fi
     if git diff-index --quiet HEAD --;then
       # No changes
