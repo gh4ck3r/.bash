@@ -17,7 +17,7 @@ function __update_git_branch_info()
         origin=" "
         ;;
       *corpzone.internalzone.com*)
-        origin=""
+        origin=" "
         ;;
     esac
 
