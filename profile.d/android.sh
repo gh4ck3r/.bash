@@ -1,7 +1,8 @@
 #!/bin/bash
 
+[[ -d ~/Android ]] || return;
+
 ANDROID_TOOLKIT_DIR=~/Android
-[[ -d $ANDROID_TOOLKIT_DIR ]] || return
 
 function set_android_env()
 {

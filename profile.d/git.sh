@@ -57,6 +57,7 @@ function setup_git_custom_commands()
       git_custom_cmds=${git_custom_cmds#$cmd}
     fi
   done
+  unset cmd
   [[ -z $git_custom_cmds ]] && return
 
   local cmd_prefix;
@@ -72,6 +73,7 @@ function setup_git_custom_commands()
       if [[ $(readlink -e $git_exec_path_proxy/$(basename $f)) = $f ]];then continue;fi
       ln -s $f $git_exec_path_proxy/
     done
+    unset f
     git_exec_path=$git_exec_path_proxy
     export GIT_EXEC_PATH=$git_exec_path_proxy
   fi
@@ -86,6 +88,7 @@ function setup_git_custom_commands()
       echo " -- Failed"
     fi
   done
+  unset cmd
 }
 setup_git_custom_commands
 unset setup_git_custom_commands

@@ -18,6 +18,7 @@ function gtags-at()
     for f in $sources;do  # Add only when the sources is readable
       [[ -r $f ]] && echo "$f" >> "$listfile";
     done
+    unset f;
   fi
 
 	echo -n "Generate gtags DB" && (

@@ -29,8 +29,9 @@ function link_dot_files()
         ln -s -t $rc_file_dir $f
       fi
     fi
-
   done
+  unset f;
   eval "$orig_shopt"
 }
 link_dot_files
+unset link_dot_files
