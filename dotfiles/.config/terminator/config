@@ -5,7 +5,7 @@
 [keybindings]
   go_next = None
   new_window = <Primary><Shift>n
-  reset = <Primary>l
+  reset = None
   reset_clear = <Primary><Shift>l
   switch_to_tab_1 = <Alt>1
   switch_to_tab_10 = <Alt>0
