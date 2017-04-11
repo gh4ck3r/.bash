@@ -32,25 +32,33 @@ function color()
   echo -ne "\e[${codes::-1}m";
 }
 
-if [[ ${1} == "dlog" ]];then
-  declare -A colors=( [V]=$(color bold white)
-                      [D]=$(color bold blue)
-                      [I]=$(color bold green)
-                      [W]=$(color bold yellow)
-                      [E]=$(color bold red)
-                      [F]=$(color bold white red_bg)
-                      [R]=$(color reset));
+cmd=${1}
+case "$cmd" in
+  "dlog")
+    declare -A colors=( [V]=$(color bold white)
+                        [D]=$(color bold blue)
+                        [I]=$(color bold green)
+                        [W]=$(color bold yellow)
+                        [E]=$(color bold red)
+                        [F]=$(color bold white red_bg)
+                        [R]=$(color reset));
 
-  exec -a "sdb" $SDB_BIN ${@} | while IFS='' read line; do
-    level='unknown';
-    if [[ ${line} =~ ^([VDIWEF])([/\(]| P) ]] ||
-       [[ ${line} =~ ^\[DLOG\][[:space:]]*[0-9]+\.[0-9]+[[:space:]]([VDIWEF])/ ]] ||
-       [[ ${line} =~ ^\[DLOG\][[:space:]]*[0-9]+\.[0-9]+[[:space:]]P\([[:space:]]+[0-9]+\)[[:space:]]+T\([[:space:]]+[0-9]+\)[[:space:]]+([VDIWEF])[[:space:]]+ ]];then
-      level=${BASH_REMATCH[1]};
+    exec -a "sdb" $SDB_BIN ${@} | while IFS='' read line; do
+      level='unknown';
+      if [[ ${line} =~ ^([VDIWEF])([/\(]| P) ]] ||
+        [[ ${line} =~ ^\[DLOG\][[:space:]]*[0-9]+\.[0-9]+[[:space:]]([VDIWEF])/ ]] ||
+        [[ ${line} =~ ^\[DLOG\][[:space:]]*[0-9]+\.[0-9]+[[:space:]]P\([[:space:]]+[0-9]+\)[[:space:]]+T\([[:space:]]+[0-9]+\)[[:space:]]+([VDIWEF])[[:space:]]+ ]];then
+        level=${BASH_REMATCH[1]};
+      fi
+      color=${colors[$level]};
+      echo "${color}$line${color:+${colors[R]}}";
+    done
+    ;;
+
+  *)
+    if [[ "$cmd" == "shell" ]] && (( $# < 2 ));then
+      # Assume .bashrc is planted already
+      opt_param="bash";
     fi
-    color=${colors[$level]};
-    echo "${color}$line${color:+${colors[R]}}";
-  done
-else
-  exec -a sdb $SDB_BIN "$@"
-fi
+    exec -a sdb $SDB_BIN "$@" $opt_param;;
+esac
