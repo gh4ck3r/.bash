@@ -3,6 +3,8 @@
 TIZEN_SDK=$HOME/tizen/studio
 [[ -d $TIZEN_SDK ]] || return;
 
+export TIZEN_SDK
+
 export PATH+=":$TIZEN_SDK/tools:$TIZEN_SDK/tools/ide/bin";
 
 function set_tizen_env()
