@@ -58,7 +58,7 @@ case "$cmd" in
   *)
     if [[ "$cmd" == "shell" ]] && (( $# < 2 ));then
       # Assume .bashrc is planted already
-      opt_param="bash -l";
+      opt_param="LINES=$(tput lines) COLUMNS=$(tput cols) bash -l";
     fi
     exec -a sdb $SDB_BIN "$@" $opt_param;;
 esac
