@@ -32,6 +32,9 @@ function color()
   echo -ne "\e[${codes::-1}m";
 }
 
+sdb_connect_ctrl=~/.tizen/sdb-connect-ctrl
+sdb_get_proxy=~/.tizen/sdb-get-proxy.sh
+
 cmd=${1}
 case "$cmd" in
   "dlog")
@@ -54,6 +57,38 @@ case "$cmd" in
       echo "${color}$line${color:+${colors[R]}}";
     done
     ;;
+
+  "connect")
+    if (( $# == 2 ));then
+      if [[ -x "$sdb_get_proxy" ]];then
+        host=${2%:*}
+        sdb_connect_proxy=$($sdb_get_proxy $host)
+        if [[ -n "$sdb_connect_proxy" ]];then
+          echo "Use host $(color bold yellow)$sdb_connect_proxy$(color reset) as $(color bold green)proxy$(color reset) for SDB connect"
+          port=${2#*:};
+          [[ $port = $host ]] && port=26101
+          target=$(getent hosts $host | cut -f1 -d' ')
+          if ! ssh -S $sdb_connect_ctrl -O check _ 2>/dev/null;then
+            ssh -M -S $sdb_connect_ctrl -fnNT \
+              -o ExitOnForwardFailure=yes -o ConnectTimeout=2 \
+              -L $port:$target:$port $sdb_connect_proxy || exit 1
+            set -- $1 localhost:$port
+          fi
+        fi
+      else
+        echo "[WARN] '$sdb_get_proxy' is not executable"
+      fi
+    fi
+    $SDB_BIN "$@" $opt_param || (
+      ssh -S $sdb_connect_ctrl -O check _ &&
+      ssh -S $sdb_connect_ctrl -O exit _) 2>/dev/null ;;
+
+  "disconnect")
+      if ssh -S $sdb_connect_ctrl -O check _ 2>/dev/null;then
+        echo "Shutdown tunneling"
+        ssh -S $sdb_connect_ctrl -O exit _ 2>/dev/null
+      fi
+      exec -a sdb $SDB_BIN "$@" $opt_param;;
 
   *)
     if [[ "$cmd" == "shell" ]] && (( $# < 2 ));then
