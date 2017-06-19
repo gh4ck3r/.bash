@@ -24,7 +24,7 @@ function __update_git_branch_info()
     if [[ $origin_url == *github.com* ]]; then
       origin=" "
     fi
-    if git diff-index --quiet HEAD --;then
+    if git diff-index --quiet HEAD -- 2>/dev/null;then
       # No changes
       PS1+=':\[\e[1;33m\]'$origin'⎇ '$branch
     else
