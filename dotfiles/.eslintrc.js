@@ -12,11 +12,11 @@ module.exports = {
     ecmaVersion: 8,
   },
   rules: {
-    indent:             [ 'error', 2 ],
+    indent:             [ 'error', 2 , {SwitchCase: 1}],
     'linebreak-style':  [ 'error', 'unix' ],
     quotes:             [ 'error', 'single' ],
     semi:               [ 'error', 'always' ],
-    'no-console':       [ 'off' ],
-    'no-unused-vars':   [ 'warn' ],
+    'no-console':       'off',
+    'no-unused-vars':   'warn',
   }
 };
