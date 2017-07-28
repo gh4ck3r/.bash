@@ -101,7 +101,7 @@ function list-b2g-sources() {
 function list-nodejs-prj-sources() {
   echo "# Source files of Node.js project"
   find "$1" \
-    -path "$1/node_modules" -prune -o \
+    -name "node_modules" -prune -o \
     -name ".eslintrc.js" -prune -o \
     -name "package.json" -prune -o \
     -name "package-lock.json" -prune -o \
