@@ -103,8 +103,8 @@ function list-nodejs-prj-sources() {
   find "$1" \
     -path "$1/node_modules" -prune -o \
     -name ".eslintrc.js" -prune -o \
-    -name "$1/package.json" -prune -o \
-    -name "$1/package-lock.json" -prune -o \
+    -name "package.json" -prune -o \
+    -name "package-lock.json" -prune -o \
     $FIND_PATTERN
 }
 
