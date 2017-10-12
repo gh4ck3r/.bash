@@ -9,7 +9,7 @@ function set_android_env()
   # I don't want android build system to change my PROMPT_COMMAND
   export STAY_OFF_MY_LAWN="yes"
 
-  local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/sdk
+  local ANDROID_SDK=$ANDROID_TOOLKIT_DIR/Sdk
 
   [[ -d $ANDROID_SDK ]] || return
   local platform_tools=$ANDROID_SDK/platform-tools
