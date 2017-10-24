@@ -5,7 +5,7 @@ IFS=\= read unused GREP_OPTIONS <<< $(alias grep)
 unset unused
 GREP_OPTIONS=${GREP_OPTIONS:1:-1} # trim single quotes
 
-declare -a exclude_files=(cscope.* GPATH GRTAGS GSYMS GTAGS)
+declare -a exclude_files=(cscope.* GPATH GRTAGS GSYMS GTAGS gtags.files)
 declare -a exclude_dirs=(.git)
 
 for f in ${exclude_files[*]};do GREP_OPTIONS+=" --exclude=$f";done
