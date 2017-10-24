@@ -91,6 +91,6 @@ else
   done
 
   EDITOR_OPTION[0]="-O"
-  $EDITOR "${EDITOR_OPTION[@]}"
+  $EDITOR "${EDITOR_OPTION[@]}" && chmod a+x "$TARGET_HOOK"
 fi
 
