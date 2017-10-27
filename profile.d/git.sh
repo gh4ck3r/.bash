@@ -51,13 +51,17 @@ function setup_git_custom_commands()
   fi
   local git_exec_path=$(git --exec-path)
 
+  # Remove already planted commands
   git_custom_cmds=($git_custom_cmds)
-  for cmd in $git_custom_cmds;do
+  local i;
+  local cmd_cnt=${#git_custom_cmds[@]}
+  for ((i=0;i<$cmd_cnt;++i));do
+    local cmd=${git_custom_cmds[$i]}
     if [[ $(readlink -e $git_exec_path/$(basename $cmd)) = $cmd ]]; then
-      git_custom_cmds=${git_custom_cmds#$cmd}
+      unset git_custom_cmds[$i]
     fi
   done
-  unset cmd
+  git_custom_cmds=${git_custom_cmds[@]}
   [[ -z $git_custom_cmds ]] && return
 
   local cmd_prefix;
@@ -79,6 +83,8 @@ function setup_git_custom_commands()
   fi
 
   for cmd in $git_custom_cmds;do
+    # Cache sudo password first if necessary
+    [[ $cmd_prefix = "sudo" ]] && $cmd_prefix [ ]
     echo "Planting git custom command(s) into $git_exec_path"
     echo -en "  * \033[91;1m$(basename $cmd)\033[0m"
 
