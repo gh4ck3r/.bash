@@ -6,7 +6,7 @@ unset unused
 GREP_OPTIONS=${GREP_OPTIONS:1:-1} # trim single quotes
 
 declare -a exclude_files=(cscope.* GPATH GRTAGS GSYMS GTAGS gtags.files)
-declare -a exclude_dirs=(.git)
+declare -a exclude_dirs=(.git .idea)
 
 for f in ${exclude_files[*]};do GREP_OPTIONS+=" --exclude=$f";done
 unset f exclude_files;
