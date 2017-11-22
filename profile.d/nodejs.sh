@@ -4,7 +4,7 @@ function set_nodejs_env()
 {
   local NODEJS_PREFIX="/opt/nodejs"
 
-  node_dirs=$(ls -d /opt/nodejs/node-v* | sort -r) # let higher version first
+  node_dirs=$(ls -d /opt/nodejs/node-v* 2> /dev/null | sort -r) # let higher version first
   for nodejs_root in $node_dirs;do
     local nodejs_bin_dir=$nodejs_root/bin
     local nodejs_lib_dir=$nodejs_root/lib/node_modules
