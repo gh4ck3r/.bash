@@ -129,3 +129,14 @@ function _git_hooks()
     pre-push"
   __gitcomp "$hooks"
 }
+
+function _git_rebaseall()
+{
+  if ! __gitdir >/dev/null;then
+    # Not a git repository
+    COMPREPLY=""
+    return
+  fi
+
+  __gitcomp_nl "$(__git_heads)"
+}
