@@ -15,7 +15,7 @@ current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
 
 for branch in $(git branch | grep -v "\<$base\>" | tr -d '*');do
   echo -e "\033[92;1m<< Rebase $branch to $base >>\033[0m"
-  git rebase $base $branch
+  git rebase $base $branch || exit $?
   echo ""
 done
 
