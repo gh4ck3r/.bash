@@ -1,5 +1,6 @@
 #!/bin/bash
 
+type -t gconftool-2 >/dev/null 2>&1 || return;
 ################################################################################
 # Enable window resize with mouse right click
 # for 12.04

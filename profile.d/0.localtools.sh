@@ -16,5 +16,6 @@ unset setup_local_tools
 
 function im_sudoer()
 {
-  [[ $(sudo -vn 2>&1) != "Sorry, user $USER may not run sudo on $HOSTNAME." ]];
+  type -t sudo >/dev/null 2>&1 &&
+    [[ $(sudo -vn 2>&1) != "Sorry, user $USER may not run sudo on $HOSTNAME." ]];
 }
