@@ -2,7 +2,7 @@
 	editor = vim
   excludesfile = ~/.gitignore
 [merge]
-  tool = vimdiff
+	tool = bc3
 [color]
   ui = auto
 	status = auto
@@ -13,6 +13,7 @@
   default = simple
 [diff]
 	submodule = log
+	guitool = bc3
 [status]
 	submodulesummary = 1
 [alias]
@@ -21,3 +22,9 @@
   unignore = update-index --no-assume-unchanged
 [include]
   path = .gituser
+[difftool]
+	prompt = 0
+[difftool "bc3"]
+	trustExitCode = true
+[mergetool "bc3"]
+	trustExitCode = true
