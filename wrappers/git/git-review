@@ -27,10 +27,13 @@ elif ! type $cmd 2>&1 >/dev/null;then
   exit 3
 fi
 
+base_branch=$(git config review.base)
+base_branch=${base_branch:=master}
+
 if [[ $# = 0 ]];then
   # find base branch if no parameter given
-  diff_param=$(git config review.base)
-  if ! git rev-parse --verify ${diff_param:=master} >/dev/null 2>&1; then
+  diff_param=$base_branch
+  if ! git rev-parse --verify $diff_param >/dev/null 2>&1; then
     cat >&2 <<EOF
   [ERROR] Base branch for review is not exist -> $diff_param
     set with following command
@@ -71,8 +74,9 @@ case $cmd in
       #  sed 's/\t/\\n/g')"
       #custom_fields[${#custom_fields[@]}]="'Review Description=$description' "
 
+      title=$(git log ^trunk HEAD --oneline --reverse | head -n1 | cut -d' ' -f2-)
       eval $cmd admin review edit last \
-        --title "$branch: " \
+        --title \"${title//\"/\\\"}\" \
         --custom-field ${custom_fields[@]}
 
       # set participants
