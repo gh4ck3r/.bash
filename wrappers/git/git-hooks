@@ -56,11 +56,13 @@ while :; do
 done
 
 if [[ $# == 0 ]];then
-  for hook in $hooks_dir/*;do
-    if [[ $hook = *.sample ]];then
-      echo -e "\033[2m$(basename $hook)\033[0m";
-    else
+  for hook in ${VALID_HOOKS[@]};do
+    if [[ -x $hooks_dir/$hook ]];then
       echo -e "\033[91;1m$(basename $hook)\033[0m";
+    elif [[ -a $hooks_dir/$hook.sample ]];then
+      echo -e "\033[1m$(basename $hook)\033[0m";
+    else
+      echo -e "\033[2m$(basename $hook)\033[0m";
     fi
   done
 else
@@ -91,6 +93,8 @@ else
   done
 
   EDITOR_OPTION[0]="-O"
-  $EDITOR "${EDITOR_OPTION[@]}" && chmod a+x "$TARGET_HOOK"
+  $EDITOR "${EDITOR_OPTION[@]}" &&
+    [[ -r $TARGET_HOOK && -w $TARGET_HOOK ]] &&
+    chmod a+x "$TARGET_HOOK"
 fi
 
