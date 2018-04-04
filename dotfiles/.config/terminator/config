@@ -1,5 +1,5 @@
 [global_config]
-  enabled_plugins = TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, ANCStoryURLHandler, BugzillaBugURLHandler, TerminalShot, LaunchpadBugURLHandler
   focus = system
   handle_size = 3
 [keybindings]
