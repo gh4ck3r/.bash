@@ -5,7 +5,7 @@
 # just works. But, in Bash, it's not working since calling "setsid()" is failed.
 #   Workaround) 'bash -c "adb-server 3>&2" & sleep .5 && kill %1'
 exec -a adb-server \
-  /home/changbin.park/Android/sdk/platform-tools/adb.orig \
+  $(which adb).orig \
   -a \
   --reply-fd 3 \
   fork-server \
