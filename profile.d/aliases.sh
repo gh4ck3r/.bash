@@ -3,10 +3,10 @@
 
 # some more ls aliases
 # This alias prevent colirized output
-#alias ls='ls --show-control-char'
-alias l='ls -ClFh --show-control-char'
-alias ll='ls -AlFh --show-control-char'
-alias la='ls -Ah --show-control-char'
+alias ls='ls --show-control-char'
+alias l='ls -ClFh --ignore={GPATH,GTAGS,GRTAGS,gtags.files}'
+alias ll='ls -AlFh'
+alias la='ls -AlFh'
 
 alias rm='rm -iv'
 alias mv='mv -iv'
