@@ -5,7 +5,7 @@
 # This alias prevent colirized output
 alias ls='ls --show-control-char'
 alias l='ls -ClFh --ignore={GPATH,GTAGS,GRTAGS,gtags.files}'
-alias ll='ls -AlFh'
+alias ll='ls -ClFh'
 alias la='ls -AlFh'
 
 alias rm='rm -iv'
