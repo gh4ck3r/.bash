@@ -8,7 +8,7 @@ PROMPT_COMMAND+="__update_git_branch_info;"
 
 function __update_git_branch_info()
 {
-  git rev-parse --is-inside-work-tree >/dev/null || return;
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return;
 
   PS1=$__PS1_PREFIX;
   local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null);
@@ -26,8 +26,8 @@ function __update_git_branch_info()
         ;;
     esac
 
-    if git rev-parse --is-inside-git-dir;then
-      PS1+=':\[\e[1;33m\]'$origin'⎇ <git-dir>'
+    if [[ $(git rev-parse --is-inside-git-dir) != false ]];then
+      PS1+=':\[\e[0;33m\]'$origin'⎇ <git-dir>'
     elif git diff-index --quiet HEAD -- 2>/dev/null;then
       # No changes
       PS1+=':\[\e[1;33m\]'$origin'⎇ '$branch
