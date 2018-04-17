@@ -5,19 +5,6 @@ if ! git_dir=$(git rev-parse --git-dir 2>&-);then
   exit 1;
 fi
 
-# Remove residual review info which is gone from git configuration
-function remove_old_review_info() {
-  for _branch in $(git config --name-only --get-regexp 'review\..*\.id'); do
-    _branch=${_branch#review.}
-    _branch=${_branch%.id}
-    # remove review info section from git config if relative branch is gone
-    if ! git rev-parse --verity $_branch >/dev/null 2>&1; then
-      git config --remove-section review.$_branch
-    fi
-  done
-}
-remove_old_review_info
-
 cmd=$(git config review.cmd)
 if [[ -z $cmd ]];then
   echo 'Set review command with "git config review.cmd <cmd>" first' >&2;
@@ -47,13 +34,17 @@ fi
 
 branch=${branch:-$(git rev-parse --abbrev-ref HEAD 2> /dev/null)}
 
+function config_review_id() {
+  git config branch.$branch.review-id $1
+}
+
 case $cmd in
   ccollab)
     # following contains meta information of connection with server
     # ~/.smartbear/com.smartbear.ccollab.client.txt
     # loginticketid field will be empty when logged out.
 
-    review_id=$(git config review.$branch.id)
+    review_id=$(config_review_id)
 
     #commits=( $(git rev-list --reverse ^${base_branch:=master} HEAD) )
 
@@ -87,7 +78,7 @@ case $cmd in
       # Store review id to git config
       review_id=$($cmd admin review-xml last \
         --xpath 'string(//reviews/review/@reviewId)')
-      [[ -n $review_id ]] && git config review.$branch.id $review_id
+      [[ -n $review_id ]] && config_review_id $review_id
     fi
     ;;
   *)
