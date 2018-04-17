@@ -8,9 +8,8 @@ PROMPT_COMMAND+="__update_git_branch_info;"
 
 function __update_git_branch_info()
 {
-  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return;
-
   PS1=$__PS1_PREFIX;
+
   local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null);
   if [[ -n $branch ]];then
     local origin;
