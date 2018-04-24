@@ -48,7 +48,7 @@ EOF
 }
 
 operation=list
-eval set -- "$(getopt --name "git hooks" -l "help::,listall::,delete::" -o "h::,l::,d::" -- $@)"
+eval set -- "$(getopt --name "git hooks" -l "help,listall,delete" -o "h,l,d" -- $@)"
 while :; do
   case "$1" in
     -h|--help)
