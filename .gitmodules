@@ -1,0 +1,3 @@
+[submodule "wrappers/git"]
+	path = wrappers/git
+	url = git@github.com:gh4ck3r/git-custom-commands.git
