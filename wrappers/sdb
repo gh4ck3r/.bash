@@ -7,30 +7,8 @@ if [[ ! -x $SDB_BIN ]];then
   exit -1
 fi
 
-function color()
-{
-  local codes;
-  while [[ $# > 0 ]];do
-    case $1 in
-      red* | green* | yellow* | blue* | magenta* | cyan* | white*)
-        [[ ${1: -3} == _bg ]] && codes+=4 || codes+=3;
-        case $1 in
-          red*)     codes+="1;";;
-          green*)   codes+="2;";;
-          yellow*)  codes+="3;";;
-          blue*)    codes+="4;";;
-          magenta*) codes+="5;";;
-          cyan*)    codes+="6;";;
-          white*)   codes+="7;";;
-        esac;;
-      reset)    codes+="0;";;
-      bold)     codes+="1;";;
-    esac
-
-    shift
-  done
-  echo -ne "\e[${codes::-1}m";
-}
+. ~/.local/bin/color.sh 2>&- ||
+  source <(curl -s https://gist.githubusercontent.com/gh4ck3r/1e47a384b5ea2bf537aa364c54ea6811/raw/install-color.sh)
 
 sdb_connect_ctrl=~/.tizen/sdb-connect-ctrl
 sdb_get_proxy=~/.tizen/sdb-get-proxy.sh
