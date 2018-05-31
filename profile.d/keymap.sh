@@ -1,8 +1,11 @@
 #!/bin/bash
 # vim: syntax=sh
 
-# This is only for Ubuntu 14.04 on my own gram
-[[ $(uname -n) = "gh4ck3r" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "14.04" ]] || return
+# This is for Ubuntu 14.04 on my own gram
+[[ $HOSTNAME == "gh4ck3r" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "14.04" ]] ||
+# This is for Ubuntu 18.04 on my corp ws with hhkb
+[[ $HOSTNAME == "cpark1-ws" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "18.04" ]] ||
+  return
 
 if type -t xmodmap >/dev/null 2>&1; then
   xmodmap -e 'keycode 108 = Hangul' -e 'keycode 105 = Hangul_Hanja'
@@ -25,7 +28,8 @@ else
 fi
 
 if type -t gsettings >/dev/null 2>&1; then
-  gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['Hangul']"
+  [[ $HOSTNAME == "cpark1-ws" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "18.04" ]] ||
+    gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['Hangul']"
 else
   echo "gsetting is not found --> Check hangul key binding"
 fi
