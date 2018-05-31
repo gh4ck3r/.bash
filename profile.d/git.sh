@@ -10,10 +10,10 @@ function __update_git_branch_info()
 {
   PS1=$__PS1_PREFIX;
 
-  local branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null);
+  local branch=$(git name-rev --name-only HEAD 2>&-);
   if [[ -n $branch ]];then
     local origin;
-    case $(git ls-remote --get-url origin 2>/dev/null) in
+    case $(git ls-remote --get-url origin 2>&-) in
       *github.com*)
         origin=" "
         ;;
@@ -27,7 +27,7 @@ function __update_git_branch_info()
 
     if [[ $(git rev-parse --is-inside-git-dir) != false ]];then
       PS1+=':\[\e[0;33m\]'$origin'⎇ <git-dir>'
-    elif git diff-index --quiet HEAD -- 2>/dev/null;then
+    elif git diff-index --quiet HEAD -- 2>&-;then
       # No changes
       PS1+=':\[\e[1;33m\]'$origin'⎇ '$branch
     else
