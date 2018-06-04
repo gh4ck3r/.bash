@@ -1,6 +1,8 @@
 #!/bin/bash
 # vim: syntax=sh
 
+[[ -v DISPLAY ]] || return
+
 # This is for Ubuntu 14.04 on my own gram
 [[ $HOSTNAME == "gh4ck3r" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "14.04" ]] ||
 # This is for Ubuntu 18.04 on my corp ws with hhkb
