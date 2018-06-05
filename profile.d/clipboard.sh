@@ -4,7 +4,7 @@
 #  $ ls | clipboard
 
 if type -t xclip 2>&1 >/dev/null; then
-  alias clipboard='(xclip && echo -n $(xclip -o) | xclip -selection clipboard)';
+  alias clipboard='(xclip && echo -n "$(xclip -o)" | xclip -selection clipboard)';
 elif type -t termux-clipboard-set 2>&1 >/dev/null; then
   alias clipboard='termux-clipboard-set';
 else
