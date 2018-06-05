@@ -10,7 +10,7 @@ function __update_git_branch_info()
 {
   PS1=$__PS1_PREFIX;
 
-  local branch=$(git name-rev --name-only HEAD 2>&-);
+  local branch=$(git rev-parse --abbrev-ref HEAD 2>&-);
   if [[ -n $branch ]];then
     local origin;
     case $(git ls-remote --get-url origin 2>&-) in
