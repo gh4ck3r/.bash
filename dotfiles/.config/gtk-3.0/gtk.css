@@ -10,10 +10,10 @@ window.terminator-terminal-window #terminator-tab-close-button {
 window.terminator-terminal-window tab {
   border-radius:  8px 8px 0px 0px;
   padding: 1px 0px 0px 5px;
-  background: @shadow_color;
+  background: @backdrop_dark_fg_color;
   color: @text_color;
 }
 
 window.terminator-terminal-window tab:checked {
-  background: @backdrop_dark_fg_color;
+  background: @shadow_color;
 }
