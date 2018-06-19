@@ -10,7 +10,7 @@ function set_dircolors()
 set_dircolors
 unset set_dircolors
 
-alias ls='ls --color=auto'
+alias ls="$(alias ls | cut -f2- -d= | tr -d "'") --color=auto"
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
