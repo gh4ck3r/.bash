@@ -1,11 +1,11 @@
 # enable color support of ls and also add handy aliases
 type dircolors >/dev/null 2>&1 || return
+[[ -x /usr/bin/dircolors ]] || return
 
 function set_dircolors()
 {
-  config_file=$__bashrc_dir/config/.dircolors;
-  [[ -r $config_file ]] || unset config_file
-  eval "$(dircolors -b $config_file)"
+  local config_file=$__bashrc_dir/config/.dircolors;
+  [[ -r $config_file ]] && eval "$(dircolors -b $config_file)" || eval "$(dircolors -b)"
 }
 set_dircolors
 unset set_dircolors
