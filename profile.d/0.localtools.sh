@@ -4,7 +4,7 @@ function setup_local_tools()
 {
 #  local shopt_backup=$(shopt -p globstar)
 #  shopt -s globstar
-  for bindir in ~/tools/*/bin;do
+  for bindir in ~/tools/*/bin ~/.local/bin;do
     if [[ -d $bindir ]] && [[ "$PATH" != *$bindir* ]];then
       export PATH=$bindir:$PATH
     fi
