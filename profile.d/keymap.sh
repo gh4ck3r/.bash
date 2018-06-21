@@ -6,7 +6,7 @@
 # This is for Ubuntu 14.04 on my own gram
 [[ $HOSTNAME == "gh4ck3r" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "14.04" ]] ||
 # This is for Ubuntu 18.04 on my corp ws with hhkb
-[[ $HOSTNAME == "cpark1-ws" && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "18.04" ]] ||
+[[ $HOSTNAME =~ cpark1-(ws|xps) && $(grep DISTRIB_RELEASE= /etc/lsb-release | cut -f2 -d'=') = "18.04" ]] ||
   return
 
 if type -t xmodmap >/dev/null 2>&1; then
