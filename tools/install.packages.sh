@@ -2,6 +2,7 @@
 
 PACKAGES=(
   ack-grep
+  ask
   autoconf
   bison
   curl
@@ -32,6 +33,20 @@ PACKAGES=(
 sudo apt install ${PACKAGES[@]}
 
 git submodule init && git submodule update
+
+if ! type fzf 2>&- >/dev/null;then
+  declare fzf_installer=$(dirname $BASH_SOURCE)/fzf/install;
+  if [[ -x $fzf_installer ]]; then
+    echo 'Install fzf'
+    declare fzf_install_param='--all --no-update-rc'
+    type zsh 2>&- >/dev/null  || fzf_install_param+=' --no-zsh'
+    type fish 2>&- >/dev/null || fzf_install_param+=' --no-fish'
+    $fzf_installer $fzf_install_param
+  else
+    echo "no installer: $fzf_installer $BASH_SOURCE"
+  fi
+fi
+
 
 declare -A UMAKE_PACKAGES=(
   [web]=firefox-dev
