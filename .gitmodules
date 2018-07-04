@@ -1,3 +1,6 @@
 [submodule "wrappers/git"]
 	path = wrappers/git
 	url = git@github.com:gh4ck3r/git-custom-commands.git
+[submodule "tools/fzf"]
+	path = tools/fzf
+	url = git@github.com:junegunn/fzf.git

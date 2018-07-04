@@ -31,6 +31,8 @@ PACKAGES=(
 
 sudo apt install ${PACKAGES[@]}
 
+git submodule init && git submodule update
+
 declare -A UMAKE_PACKAGES=(
   [web]=firefox-dev
 )
