@@ -18,6 +18,7 @@ PACKAGES=(
   libtool-bin
   net-tools
   qemu-kvm
+  sdcv
   silversearcher-ag
   subversion
   terminator
