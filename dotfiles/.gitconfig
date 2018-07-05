@@ -22,6 +22,7 @@
   ignore = update-index --assume-unchanged
   ignored = !git ls-files -v | grep "^[a-z]"
   unignore = update-index --no-assume-unchanged
+  untracked = ls-files --others --exclude-standard --directory --no-empty-directory
 [include]
   path = .gituser
 [difftool]
