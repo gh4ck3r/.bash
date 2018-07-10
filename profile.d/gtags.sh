@@ -28,7 +28,7 @@ function gtags-at()
 	) && echo " -- Done" || echo " -- Failed"
 
   local db="$at/cscope.out"
-  if [ -f $db ] && [[ "$CSCOPE_DB" != *$db* ]];then
+  if [[ -f "$db" ]] && [[ "$CSCOPE_DB" != *$db* ]];then
     export CSCOPE_DB+=${CSCOPE_DB:+:}$db;
   fi
 }
@@ -38,10 +38,10 @@ function gtags-clean() {
 
   if [[ -d $db_path ]] && [[ -x $db_path ]];then
     echo "Clean gtags files at $db_path";
-    rm -f $db_path/GTAGS \
-          $db_path/GRTAGS \
-          $db_path/GPATH \
-          $db_path/gtags.files \
+    rm -f "$db_path"/GTAGS \
+          "$db_path"/GRTAGS \
+          "$db_path"/GPATH \
+          "$db_path"/gtags.files \
           > /dev/null;
   else
     echo "No global DB here..";

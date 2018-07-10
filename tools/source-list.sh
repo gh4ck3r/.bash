@@ -1,31 +1,36 @@
 #!/bin/bash
 
-declare -a SRC_PTRN=(
-    '*.webidl' '*.aidl' '*.ipdl' '*.idl'
-    '*.xml' '*.xbl' '*.html'
-    '*.mk'
-    '*.js' '*.jsm' '*.json'
-    '*.java'
-    '*.h' '*.H' '*.hh' '*.hpp' '*.hxx'
-    '*.c' '*.C' '*.cc' '*.cpp' '*.c++' '*.cxx'
-    '*.s' '*.S'
-    '*.x'
-    '*.y'
-    '*.php' '*.php3' '*.phtml');
+if ! which fd >/dev/null;then
+  echo 'Download & install "fd" first - https://github.com/sharkdp/fd/releases'
+  exit 1
+fi
+
+declare -a SRC_EXT_PTRN=(
+  webidl aidl ipdl idl
+  xml xbl html
+  mk
+  js jsm json
+  java
+  h H hh hpp hxx
+  c C cc cpp c++ cxx
+  s S
+  x
+  y
+  php php3 phtml);
+
 # Generate find parameter to find targets
-FIND_PATTERN="-type f ( ";
-set -f
-for _ptrn in ${SRC_PTRN[@]}; do
-	FIND_PATTERN+="-iname $_ptrn -o ";
+FIND_PATTERN="-t f ";
+set -f  # Disable file name generation (globbing)
+for _ptrn in ${SRC_EXT_PTRN[@]}; do
+  FIND_PATTERN+="-e $_ptrn ";
 done
-unset SRC_PTRN
-FIND_PATTERN="${FIND_PATTERN%-o } ) -print";
 set +f
+unset SRC_EXT_PTRN
 
 function sourcetree-type()
 {
-	local target=$1
-	if [ ! -d $target -o ! -x $target ];then
+	local target="$1"
+	if [ ! -d "$target" -o ! -x "$target" ];then
 		echo "$target is inaccessible"
 		return;
 	fi
@@ -57,11 +62,13 @@ function sourcetree-type()
 
 function list-generic-sources() {
   echo "# Source files of generic project"
-  find "$1" $FIND_PATTERN
+  fd $FIND_PATTERN "$1"
 }
 
 function list-linux-sources() {
-  find $1 \
+  echo "FIXME : Find linux sources at $1" >&2
+  return 1
+  fd \
     -type d \
       -path "$1/include/asm-*" \
       ! -path "$1/include/asm-arm*" \
@@ -71,40 +78,39 @@ function list-linux-sources() {
       -path "$1/arch/*" \
       ! -path "$1/arch/arm*" \
       -prune -o \
-    $FIND_PATTERN
+    $FIND_PATTERN "$1"
 }
 
 function list-gaia-sources() {
-  find $1 \
-    -path "$1/xulrunner-sdk*" -prune -o \
-    -path "$1/xulrunner" -prune -o \
+  fd --full-path "$1" \
+    --exclude /xulrunner-sdk* \
+    --exclude /xulrunner \
     $FIND_PATTERN
 }
 
 function list-gecko-sources() {
-  find $1 \
-    -path "$1/python" -prune -o \
-    -path "$1/*test" -prune -o \
-    -path "$1/*tests" -prune -o \
-    -path "$1/*testing" -prune -o \
-    -path "$1/*gtk2" -prune -o \
-    -path "$1/*mswindows" -prune -o \
+  fd --full-path "$1" \
+    --exclude /python \
+    --exclude /*test \
+    --exclude /*tests \
+    --exclude /*testing \
+    --exclude /*gtk2 \
+    --exclude /*mswindows \
     $FIND_PATTERN
 }
 
 function list-b2g-sources() {
-  list-gecko-sources $1/gecko;
-  list-gaia-sources  $1/gaia;
-  list-linux-sources $1/kernel;
+  list-gecko-sources "$1/gecko";
+  list-gaia-sources  "$1/gaia";
+  list-linux-sources "$1/kernel";
 }
 
 function list-nodejs-prj-sources() {
   echo "# Source files of Node.js project"
-  find "$1" \
-    -name "node_modules" -prune -o \
-    -name ".eslintrc.js" -prune -o \
-    -name "package.json" -prune -o \
-    -name "package-lock.json" -prune -o \
+  fd --full-path "$1" \
+    --exclude node_modules \
+    --exclude .eslintrc.js \
+    --exclude /package*.json \
     $FIND_PATTERN
 }
 
