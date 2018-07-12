@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PACKAGES=(
+declare -a APT_PACKAGES=(
   ack-grep
   ask
   autoconf
@@ -29,8 +29,13 @@ PACKAGES=(
   wmctrl
   xclip
 );
+sudo apt install ${APT_PACKAGES[@]}
 
-sudo apt install ${PACKAGES[@]}
+declare -a SNAP_PACKAGES=(
+  rg
+  wavebox
+);
+sudo snap install ${SNAP_PACKAGES[@]}
 
 git submodule init && git submodule update
 
