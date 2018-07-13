@@ -1,6 +1,7 @@
 #!/bin/bash
+# vim:set fdm=marker:
 
-declare -a APT_PACKAGES=(
+declare -a APT_PACKAGES=(#{{{
   ack-grep
   ask
   autoconf
@@ -28,7 +29,7 @@ declare -a APT_PACKAGES=(
   vim
   wmctrl
   xclip
-);
+); #}}}
 sudo apt install ${APT_PACKAGES[@]}
 
 declare -a SNAP_PACKAGES=(
@@ -52,6 +53,11 @@ if ! type fzf 2>&- >/dev/null;then
   fi
 fi
 
+if ! which fd; then
+  wget https://github.com/sharkdp/fd/releases/download/v7.0.0/fd_7.0.0_amd64.deb
+  sudo dpkg -i fd_7.0.0_amd64.deb
+  rm fd_7.0.0_amd64.deb
+fi
 
 declare -A UMAKE_PACKAGES=(
   [web]=firefox-dev
@@ -63,7 +69,7 @@ for cmd in ${!UMAKE_PACKAGES[@]};do
 done
 
 ################################################################################
-# Perform close window with search key which used to be on top of Logitech mice
+# {{{Perform close window with search key which used to be on top of Logitech mice
 function isCustomCommandInstalled()
 {
   local keybindings=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings);
@@ -102,5 +108,5 @@ function installCustomCommand()
 isCustomCommandInstalled 'Close window' ||
   installCustomCommand 'Close window' "wmctrl -c :ACTIVE:" Search
 
-# Perform close window with search key which used to be on top of Logitech mice
+# }}}
 ################################################################################
