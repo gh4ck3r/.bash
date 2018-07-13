@@ -5,27 +5,8 @@ if ! which fd >/dev/null;then
   exit 1
 fi
 
-declare -a SRC_EXT_PTRN=(
-  webidl aidl ipdl idl
-  xml xbl html
-  mk
-  js jsm json
-  java
-  h H hh hpp hxx
-  c C cc cpp c++ cxx
-  s S
-  x
-  y
-  php php3 phtml);
-
 # Generate find parameter to find targets
-FIND_PATTERN="-t f ";
-set -f  # Disable file name generation (globbing)
-for _ptrn in ${SRC_EXT_PTRN[@]}; do
-  FIND_PATTERN+="-e $_ptrn ";
-done
-set +f
-unset SRC_EXT_PTRN
+FIND_PATTERN="-at f ";
 
 function sourcetree-type()
 {
@@ -62,7 +43,7 @@ function sourcetree-type()
 
 function list-generic-sources() {
   echo "# Source files of generic project"
-  fd $FIND_PATTERN "$1"
+  fd $FIND_PATTERN -p "$1"
 }
 
 function list-linux-sources() {
