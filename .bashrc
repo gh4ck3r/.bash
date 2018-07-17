@@ -62,6 +62,7 @@ __bashrc_dir=$(dirname $(readlink -e ${BASH_SOURCE[0]}))
 for __bash_scripts in $__bashrc_dir/profile.d/*.sh;do
 	if [ -r $__bash_scripts ];then . $__bash_scripts;fi
 done
+unset __bash_scripts
 
 # for Korean support on rhythmbox
 if [ -x /usr/bin/rhythmbox ];then

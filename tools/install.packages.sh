@@ -29,6 +29,7 @@ declare -a APT_PACKAGES=(#{{{
   vim
   wmctrl
   xclip
+  xsltproc
 ); #}}}
 sudo apt install ${APT_PACKAGES[@]}
 

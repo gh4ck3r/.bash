@@ -24,6 +24,13 @@ case ${1} in
     # Append color option only when STDOUT(1) is not redirected
     [[ -t 1 ]] && ADDITIONAL_OPTIONS="-v color"
     ;;
+  tap)
+    for elem in "${@#$1}";do
+      [[ -z $elem ]] && continue;
+      declare coords=$($ADB_BIN shell "uiautomator dump >/dev/null && cat /sdcard/window_dump.xml" | xmllint --xpath "translate(substring-before(substring-after(//node[@text='$elem']/@bounds, '['), ']'), ',', ' ')" -);
+      exec $ADB_BIN $ADB_HOST shell input $1 $ADDITIONAL_OPTIONS $coords
+    done
+    exit;;
 esac
 
 exec $ADB_BIN $ADB_HOST $1 $ADDITIONAL_OPTIONS ${@#$1}
