@@ -45,4 +45,4 @@ case ${1} in
     exec $ADB_BIN $ADB_HOST shell -- $cmds;;
 esac
 
-exec $ADB_BIN $ADB_HOST $1 $ADDITIONAL_OPTIONS ${@#$1}
+exec -a adb $ADB_BIN $ADB_HOST $1 $ADDITIONAL_OPTIONS ${@#$1}
