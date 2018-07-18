@@ -94,7 +94,8 @@ function _adb()
       return 0
       ;;
     uninstall)
-      local apks=$(adb shell ls /data/data 2>/dev/null | tr '\n' ' ' | tr -d '\r')
+      # list 3rd party packages only
+      local apks=$(adb shell pm list packages -3 | cut -f2 -d:)
       if [[ $prev != "-k" && $cur == "-" ]]; then
           COMPREPLY=( $(compgen -W "-k $apks" -- ${cur}) )
       else
@@ -154,4 +155,4 @@ complete -o default -F _adb adb
 # sh-indent-comment: t
 # indent-tabs-mode: nil
 # End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: ft=sh
