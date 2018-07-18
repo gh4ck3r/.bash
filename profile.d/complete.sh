@@ -32,3 +32,5 @@ function __complete_files_at()
   fi
 }
 
+# This is referenced from /usr/share/bash-completion/bash_completion
+BASH_COMPLETION_USER_DIR=$__bashrc_dir
