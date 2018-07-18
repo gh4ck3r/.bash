@@ -423,12 +423,3 @@ function ndk-at()
 #alias browser="adb shell am start com.android.browser"
 #alias android-connect="mtpfs -o allow_other /media/OptimusPad"
 #alias android-disconnect="fusermount -u /media/OptimusPad"
-
-function _fzf_complete_adb_tap() {
-  _fzf_complete "--multi --reverse" "$@" < <(
-    adb shell 'uiautomator dump >&- && cat /sdcard/window_dump.xml' |
-      xsltproc --path $__bashrc_dir/tools uiautomator.text.xslt -
-  )
-}
-
-complete -F _fzf_complete_adb_tap -o default -o bashdefault adb tap

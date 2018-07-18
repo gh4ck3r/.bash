@@ -31,6 +31,7 @@ function _adb()
         uninstall bugreport help version wait-for-device start-server \
         reboot reboot-bootloader sideload \
         kill-server get-state get-serialno status-window remount root ppp"
+  cmds+=" dumpui tap"
   cmds_not_need_device="devices help version start-server kill-server"
   subcommand=""
   device_selected=""
@@ -144,6 +145,11 @@ function _adb()
           fi
           return 0
       fi
+      ;;
+    tap)
+      _fzf_complete "--multi --reverse" "$cur" < <(
+        adb dumpui | xsltproc --path $__bashrc_dir/tools uiautomator.text.xslt -
+      )
       ;;
   esac
 }
