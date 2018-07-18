@@ -18,6 +18,7 @@ declare -a APT_PACKAGES=(#{{{
   libncurses5-dev
   libsecret-tools
   libtool-bin
+  libxml2-utils
   net-tools
   qemu-kvm
   sdcv
@@ -34,10 +35,14 @@ declare -a APT_PACKAGES=(#{{{
 sudo apt install ${APT_PACKAGES[@]}
 
 declare -a SNAP_PACKAGES=(
-  rg
   wavebox
 );
 sudo snap install ${SNAP_PACKAGES[@]}
+
+declare -a SNAP_CLASSIC_PACKAGES=(
+  rg
+);
+sudo snap install ${SNAP_CLASSIC_PACKAGES[@]} --classic
 
 git submodule init && git submodule update
 
