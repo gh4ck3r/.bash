@@ -15,13 +15,9 @@ function set_android_env()
   local platform_tools=$ANDROID_SDK/platform-tools
   PATH=$platform_tools:$ANDROID_SDK/tools:$PATH
 
-  local adb=$platform_tools/adb
-  alias adb=$adb
-
-  [[ -x $adb ]] && [[ -w $adb ]] && ! [[ -L $adb ]] || return
-  echo -e "\033[91;1mReplace adb with wrapper\033[0m : $adb"
-  mv $adb $adb.orig 2>&1 >/dev/null
-  ln -s $__bashrc_dir/wrappers/adb $adb 2>&1 >/dev/null
+  [[ -x $platform_tools/adb ]] && function adb() {
+    $__bashrc_dir/wrappers/adb "$@"
+  } || unset adb
 }
 set_android_env
 unset set_android_env

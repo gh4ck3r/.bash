@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ADB_BIN=${BASH_SOURCE[0]}.orig
+ADB_BIN=$(which adb)
 
 if [[ ! -x $ADB_BIN ]];then
   echo "$ADB_BIN is not exist"
