@@ -19,13 +19,36 @@ if [[ -v SSH_CLIENT ]];then
   fi
 fi
 
+function adb-dumpui()
+{
+  if [[ $(adb shell pm list packages com.github.uiautomator | wc -l) != 2 ]];
+  then
+    echo "Helper package(s) are not installed. Installing them" >&2
+    for p in $__bashrc_dir/tools/app-uiautomator*.apk;do
+      adb install -r -t -g $p;
+    done
+  fi
+
+  read -r -d '' shell_cmd <<SCRIPT
+ps | grep com.github.uiautomator 2>&- >&- ||
+  am instrument -w com.github.uiautomator.test/android.support.test.runner.AndroidJUnitRunner >&- 2>&-
+SCRIPT
+  adb shell "$shell_cmd" &
+  read -r -d '' shell_cmd <<SCRIPT
+while ! ps | grep com.github.uiautomator 2>&- >&-;do sleep 1;done;
+curl http://localhost:9008/jsonrpc/0 -sd '{"jsonrpc":"2.0","method":"dumpWindowHierarchy","params":[false],"id":2}'
+SCRIPT
+  exec adb shell $shell_cmd | jq -r .result -
+  exit $?
+}
+
 case ${1} in
   logcat)
     # Append color option only when STDOUT(1) is not redirected
     [[ -t 1 ]] && ADDITIONAL_OPTIONS="-v color"
     ;;
   dumpui)
-    exec adb shell "uiautomator dump >/dev/null && cat /sdcard/window_dump.xml"
+    adb-dumpui "$@"
     ;;
   tap)
     declare -a coords=()
