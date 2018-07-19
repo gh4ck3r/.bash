@@ -38,7 +38,7 @@ SCRIPT
 while ! ps | grep com.github.uiautomator 2>&- >&-;do sleep 1;done;
 curl http://localhost:9008/jsonrpc/0 -sd '{"jsonrpc":"2.0","method":"dumpWindowHierarchy","params":[false],"id":2}'
 SCRIPT
-  exec adb shell $shell_cmd | jq -r .result -
+  adb shell $shell_cmd | jq -r .result -
   exit $?
 }
 
@@ -66,6 +66,20 @@ case ${1} in
     cmds="${cmds% && }";
 
     exec $ADB_BIN $ADB_HOST shell -- $cmds;;
+  reset)
+    declare -a usbs=(
+      $(adb devices -l 2>&- | grep 'device usb:' | while read _ _ path _;do echo $path;done)
+    );
+    for u in ${usbs[@]};do
+      python - <<PYTHON
+import os, fcntl;
+fd = os.open('$(printf "/dev/bus/usb/%03d/%03d" $(cat /sys/bus/usb/devices/${u#usb:}/{bus,dev}num))', os.O_WRONLY)
+fcntl.ioctl(fd, ord('U') << (4*2) | 20, 0)
+os.close(fd)
+PYTHON
+    done
+    exit
+    ;;
 esac
 
 exec -a adb $ADB_BIN $ADB_HOST $1 $ADDITIONAL_OPTIONS ${@#$1}
