@@ -147,12 +147,19 @@ function _adb()
       fi
       ;;
     tap)
-      _fzf_complete "--multi --reverse" "$cur" < <(
+      FZF_COMPLETION_TRIGGER='' _fzf_complete "--multi --reverse" "$cur" < <(
         adb dumpui | xsltproc --path $__bashrc_dir/tools uiautomator.text.xslt -
       )
       ;;
   esac
 }
+
+function _adb_post() {
+  while read line;do
+    [[ $line =~ .*[$IFS].* ]] && echo -ne "'$line' " || echo -ne "$line "
+  done
+}
+
 complete -o default -F _adb adb
 
 # Local variables:
