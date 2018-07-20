@@ -21,25 +21,46 @@ fi
 
 function adb-dumpui()
 {
-  if [[ $(adb shell pm list packages com.github.uiautomator | wc -l) != 2 ]];
-  then
-    echo "Helper package(s) are not installed. Installing them" >&2
-    for p in $__bashrc_dir/tools/app-uiautomator*.apk;do
-      adb install -r -t -g $p;
-    done
+  local dumpWindowHierarchy;
+  read -r -d '' dumpWindowHierarchy <<SCRIPT
+curl http://localhost:9008/jsonrpc/0 -sd '{"jsonrpc":"2.0","method":"dumpWindowHierarchy","params":[false],"id":0}'
+SCRIPT
+  local xml=$(adb shell "$dumpWindowHierarchy" | jq -r .result -)
+
+  local testpkg=com.github.uiautomator
+  local testinst=$testpkg.test
+  if [[ -z $xml ]];then
+    function ensure_installed() {
+      if ! adb shell "pm list $1| grep $2 >&-";then
+        echo -n "install $1 $2 - " >&2
+        if ! adb install -r -t -g ~/.bash/tools/"$3";then
+          echo "Failed to install $3" >&2
+          exit 1;
+        fi
+      fi
+    }
+    ensure_installed packages $testpkg app-uiautomator.apk
+    ensure_installed instrumentation $testinst app-uiautomator-test.apk
+
+    xml=null; # let instrumentation start at following
   fi
 
-  read -r -d '' shell_cmd <<SCRIPT
-ps | grep com.github.uiautomator 2>&- >&- ||
-  am instrument -w com.github.uiautomator.test/android.support.test.runner.AndroidJUnitRunner >&- 2>&-
-SCRIPT
-  adb shell "$shell_cmd" &
-  read -r -d '' shell_cmd <<SCRIPT
-while ! ps | grep com.github.uiautomator 2>&- >&-;do sleep 1;done;
-curl http://localhost:9008/jsonrpc/0 -sd '{"jsonrpc":"2.0","method":"dumpWindowHierarchy","params":[false],"id":2}'
-SCRIPT
-  adb shell $shell_cmd | jq -r .result -
-  exit $?
+  if [[ $xml == null ]];then
+    # port 9008 is closed only when $testpkg is killed
+    adb shell am force-stop $testpkg
+    adb shell "am instrument -w $testinst 2>&1 >&- &" &
+    local inst_pid=$!
+    # Wait until RPC port is opened
+    local wait_instrumentation;
+    adb shell 'while ! netstat -antl | grep ":9008.*LISTEN *$">/dev/null ;do sleep .1;done'
+    kill $inst_pid  # kill instrumentation process as it's in a kind of zombie state
+
+    # Retrive xml
+    xml=$(adb shell "$dumpWindowHierarchy" | jq -r .result -)
+  fi
+
+  echo $xml
+  exit 0
 }
 
 case ${1} in
