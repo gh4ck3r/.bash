@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Termux doesn't need font-awesome
+[[ $(uname -o) == Android ]] && return;
+
 # Check & install font-awesome if necessary
 function +FontAwesome()
 {
