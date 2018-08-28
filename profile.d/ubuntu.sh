@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# DO NOT APPLY THIS FOR Ubuntu on Windows (WSL)
+[[ $(uname -r) =~ .*Microsoft ]] && return;
 ################################################################################
 # Enable window resize with mouse right click
 # for 12.04
