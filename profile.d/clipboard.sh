@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ $(uname -o) == Msys ]] && return; # Skip on windows
+
 # e.g) copy output of ls to clipboard
 #  $ ls | clipboard
 

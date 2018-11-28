@@ -14,6 +14,15 @@ function link_dot_files()
     if [[ -d $f ]]; then continue; fi
 
     local rc_file_fullpath=${f#$DOTFILES_ROOT/}
+
+    # MINGW on Windows requires administrator privileged "mklink" to make a symbolic link
+    if [[ $(uname -o) == Msys ]];then
+      if [[ $f == $DOTFILES_ROOT/.git* ]] && ! [[ -L ~/$rc_file_fullpath ]];then
+        echo "Make a link to $f on your own with Administrator privilege"
+      fi
+      continue;
+    fi
+
     if [[ ! -L ~/$rc_file_fullpath ]]; then
       if [[ -e ~/$rc_file_fullpath ]]; then
         echo "~/$rc_file_fullpath exists but not a link to $f"

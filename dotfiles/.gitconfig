@@ -1,35 +1,36 @@
 [core]
-	editor = vim
+  editor = vim
   excludesfile = ~/.gitignore
 [merge]
-	tool = bc3
+  tool = bc3
 [color]
   ui = auto
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  diff = auto
 [push]
   default = simple
 [diff]
-	submodule = log
-	guitool = bc3
-	noprefix = true
+  submodule = log
+  guitool = bc3
+  noprefix = true
 [status]
-	submodulesummary = 1
+  submodulesummary = 1
 [alias]
   graph = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   ignore = update-index --assume-unchanged
   ignored = !git ls-files -v | grep "^[a-z]"
   unignore = update-index --no-assume-unchanged
   untracked = ls-files --others --exclude-standard --directory --no-empty-directory
+  root = rev-parse --show-toplevel
 [include]
   path = .gituser
 [difftool]
-	prompt = 0
+  prompt = 0
 [difftool "bc3"]
-	trustExitCode = true
+  trustExitCode = true
 [mergetool "bc3"]
-	trustExitCode = true
+  trustExitCode = true
 [credential]
-	helper = cache
+  helper = cache

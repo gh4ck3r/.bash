@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Termux doesn't need font-awesome
-[[ $(uname -o) == Android ]] && return;
+# Termux and MINGW don't need font-awesome
+[[ $(uname -o) =~ (Android|Msys) ]] && return;
 
 # Check & install font-awesome if necessary
 function +FontAwesome()

@@ -51,5 +51,5 @@ function __update_git_branch_info()
 }
 
 
-. $__bashrc_dir/wrappers/git/install.sh
-. $__bashrc_dir/wrappers/git/bash-completion.sh
+[[ -r $__bashrc_dir/wrappers/git/install.sh ]] && . $__bashrc_dir/wrappers/git/install.sh
+[[ -r $__bashrc_dir/wrappers/git/bash-completion.sh ]] && . $__bashrc_dir/wrappers/git/bash-completion.sh
