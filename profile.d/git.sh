@@ -6,11 +6,18 @@ type -t git >/dev/null 2>&1 || return
   PROMPT_COMMAND+=';'
 PROMPT_COMMAND+="__update_git_branch_info;"
 
+if ! type -t __git_ps1 > /dev/null 2>&1;then
+function __git_ps1()
+{
+  git rev-parse --abbrev-ref HEAD 2>&-
+}
+fi
+
 function __update_git_branch_info()
 {
   PS1=$__PS1_PREFIX;
 
-  local branch=$(git rev-parse --abbrev-ref HEAD 2>&-);
+  local branch=$(__git_ps1 %s)
   if [[ -n $branch ]];then
     local origin;
     case $(git ls-remote --get-url origin 2>&-) in
