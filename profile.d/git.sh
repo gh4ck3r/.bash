@@ -21,10 +21,10 @@ function __update_git_branch_info()
   if [[ -n $branch ]];then
     local origin;
     case $(git ls-remote --get-url origin 2>&-) in
-      *github.com*)
+      *github.com[:/]*)
         origin=" "
         ;;
-      *corpzone.internalzone.com*)
+      *github*)
         origin=" "
         ;;
       *)
