@@ -2,10 +2,6 @@
 
 type -t git >/dev/null 2>&1 || return
 
-#[[ -v PROMPT_COMMAND && "${PROMPT_COMMAND: -1}" != ';' ]] &&
-#  PROMPT_COMMAND+=';'
-#PROMPT_COMMAND+="__update_git_branch_info;"
-
 if ! type -t __git_ps1 > /dev/null 2>&1;then
 function __git_ps1()
 {
@@ -31,24 +27,24 @@ function _git_ps1()
       ;;
   esac
 
-  local info;
+  local color;
   # \[ and \] in PS1 is translated into \001 and \002 respectively
   # https://superuser.com/questions/301353/escape-non-printing-characters-in-a-function-for-a-bash-prompt
   if [[ $(git rev-parse --is-inside-git-dir) != false ]];then
-    info=':\001\e[0;33m\002'$origin'⎇ <git-dir>'
+    color='0;33'
   elif git diff-index --quiet HEAD -- 2>&-;then
     # No changes
-    info=':\001\e[1;33m\002'$origin'⎇ '$branch
+    color='1;33'
   else
     if [[ $(git diff --numstat 2>&- | wc -l) != 0 ]];then
       # Unstaged changes
-      info=':\001\e[1;31m\002'$origin'⎇ '$branch
+      color='1;31'
     else
       # Only staged changes
-      info=':\001\e[0;32m\002'$origin'⎇ '$branch
+      color='0;32'
     fi
   fi
-  [[ -n $info ]] && echo -ne "${info}"
+  [[ -n $color ]] && echo -ne ":\001\e[${color}m\002${origin}⎇ ${branch}"
 }
 
 
