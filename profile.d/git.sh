@@ -40,7 +40,7 @@ function _git_ps1()
     # No changes
     info=':\001\e[1;33m\002'$origin'⎇ '$branch
   else
-    if [[ $(git diff --numstat | wc -l) != 0 ]];then
+    if [[ $(git diff --numstat 2>&- | wc -l) != 0 ]];then
       # Unstaged changes
       info=':\001\e[1;31m\002'$origin'⎇ '$branch
     else
