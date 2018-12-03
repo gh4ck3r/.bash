@@ -32,21 +32,23 @@ function _git_ps1()
   esac
 
   local info;
+  # \[ and \] in PS1 is translated into \001 and \002 respectively
+  # https://superuser.com/questions/301353/escape-non-printing-characters-in-a-function-for-a-bash-prompt
   if [[ $(git rev-parse --is-inside-git-dir) != false ]];then
-    info=':\e[0;33m'$origin'⎇ <git-dir>'
+    info=':\001\e[0;33m\002'$origin'⎇ <git-dir>'
   elif git diff-index --quiet HEAD -- 2>&-;then
     # No changes
-    info=':\e[1;33m'$origin'⎇ '$branch
+    info=':\001\e[1;33m\002'$origin'⎇ '$branch
   else
     if [[ $(git diff --numstat | wc -l) != 0 ]];then
       # Unstaged changes
-      info=':\e[1;31m'$origin'⎇ '$branch
+      info=':\001\e[1;31m\002'$origin'⎇ '$branch
     else
       # Only staged changes
-      info=':\e[0;32m'$origin'⎇ '$branch
+      info=':\001\e[0;32m\002'$origin'⎇ '$branch
     fi
   fi
-  [[ -n $info ]] && echo -ne $info
+  [[ -n $info ]] && echo -ne "${info}"
 }
 
 
