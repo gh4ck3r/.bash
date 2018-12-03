@@ -1,6 +1,6 @@
 # enable color support of ls and also add handy aliases
 type dircolors >/dev/null 2>&1 || return
-[[ -x /usr/bin/dircolors ]] || return
+[[ -x $(which dircolors) ]] || return
 
 function set_dircolors()
 {
