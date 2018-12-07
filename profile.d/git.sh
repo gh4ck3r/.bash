@@ -29,7 +29,7 @@ function _git_ps1()
 
   if [[ -n $GIT_PS1_SHOWDIRTYSTATE ]];then
                      #|   branch   ||       status       ||   upstream  |
-    if [[ $branch =~ ^([[:graph:]]+)([[:space:]][*+#$%]+)?([[:space:]].*)$ ]];then
+    if [[ $branch =~ ^([[:graph:]]+)([[:space:]][*+#$%]+)?([[:space:]].*)?$ ]];then
       branch=${BASH_REMATCH[1]}${BASH_REMATCH[3]}
       local status=${BASH_REMATCH[2]}
     fi
