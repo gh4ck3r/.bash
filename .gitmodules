@@ -4,3 +4,9 @@
 [submodule "tools/fzf"]
 	path = tools/fzf
 	url = git@github.com:junegunn/fzf.git
+[submodule "wrappers/peda"]
+	path = wrappers/peda
+	url = git@github.com:longld/peda.git
+[submodule "wrappers/pwndbg"]
+	path = wrappers/pwndbg
+	url = https://github.com/pwndbg/pwndbg
