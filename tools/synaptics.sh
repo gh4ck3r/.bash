@@ -18,14 +18,17 @@ synclient HorizTwoFingerScroll=1 VertTwoFingerScroll=1 EmulateTwoFingerMinZ=40 E
 # Palm rejection
 synclient PalmDetect=1 PalmMinWidth=5 PalmMinZ=10 2>/dev/null
 # Ignore Left/Right edge since those're used to be clicked by palm
-if [[ $(synclient -V) < 1.9 ]]; then
+if [[ $(synclient -V) =~ ^1\.9(.*)?$ ]]; then
   # Apply values of 'LeftEdge' and 'RightEdge' to 'AreaLeftEdge' and
   # 'AreaRightEdge' respectively
-  if [[ $(hostname) = 'cpark-xps' ]];then
-    # id 12 comes from xinput -list
-    xinput set-prop 12 "Device Enabled" 0 && xinput set-prop 12 "Device Enabled" 1
+  if [[ $(hostname) = 'xps13' ]];then
+    # id 13 comes from xinput -list
+    #xinput disable 13
+    #xinput enable 13
+    synclient AreaLeftEdge=200 AreaRightEdge=1000 2>/dev/null
+  else
+    synclient $(synclient | grep -e '\<\(Left\|Right\)Edge\>' | sed -e 's/\(\w\+\)\s*=\s*\([0-9]\+\)/Area\1=\2/') 2>/dev/null
   fi
-  synclient $(synclient | grep -e '\<\(Left\|Right\)Edge\>' | sed -e 's/\(\w\+\)\s*=\s*\([0-9]\+\)/Area\1=\2/') 2>/dev/null
 else
   # AreaLeftEdge and AreaRightEdge should be specified in percent from
   # synaptics 1.9 and later(See man page for detail)
