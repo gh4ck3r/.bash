@@ -23,8 +23,9 @@ if [[ $(synclient -V) =~ ^1\.9(.*)?$ ]]; then
   # 'AreaRightEdge' respectively
   if [[ $(hostname) = 'xps13' ]];then
     # id 13 comes from xinput -list
-    #xinput disable 13
-    #xinput enable 13
+    id=$(xinput list --id-only "DLL075B:01 06CB:76AF Touchpad");
+    xinput disable $id
+    xinput enable $id
     synclient AreaLeftEdge=200 AreaRightEdge=1000 2>/dev/null
   else
     synclient $(synclient | grep -e '\<\(Left\|Right\)Edge\>' | sed -e 's/\(\w\+\)\s*=\s*\([0-9]\+\)/Area\1=\2/') 2>/dev/null
