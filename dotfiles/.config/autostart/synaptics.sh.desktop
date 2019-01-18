@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/cpark/.bash/tools/synaptics.sh
+Exec=/home/ghacker/.bash/tools/synaptics.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

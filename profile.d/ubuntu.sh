@@ -21,6 +21,3 @@ if [[ -x $(which gsettings) ]];then
     gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
   fi
 fi
-
-# Activate touchpad palm rejection
-$__bashrc_dir/tools/synaptics.sh
