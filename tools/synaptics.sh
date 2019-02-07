@@ -15,6 +15,8 @@ DLL075B:01 06CB:76AF Touchpad
 
 # 2 finger scroll
 synclient HorizTwoFingerScroll=1 VertTwoFingerScroll=1 EmulateTwoFingerMinZ=40 EmulateTwoFingerMinW=8 2>/dev/null
+# for XPS13 horizontal natural scroll
+synclient HorizScrollDelta=-27
 # Palm rejection
 synclient PalmDetect=1 PalmMinWidth=5 PalmMinZ=10 2>/dev/null
 # Ignore Left/Right edge since those're used to be clicked by palm
