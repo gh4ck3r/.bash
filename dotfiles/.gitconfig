@@ -36,6 +36,7 @@
   helper = cache
 [submodule]
   recurse = true
+  fetchJobs = 4
 [filter "lfs"]
   process = git-lfs filter-process
   required = true
