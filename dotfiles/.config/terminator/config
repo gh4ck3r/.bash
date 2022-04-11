@@ -34,7 +34,7 @@
     background_darkness = 0.82
     background_type = transparent
     cursor_color = "#ffffff"
-    font = DejaVu Sans Mono 10
+    font = Hack 10
     foreground_color = "#ffffff"
     scrollback_infinite = True
     split_to_group = True
