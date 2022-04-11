@@ -15,6 +15,7 @@ declare -a APT_PACKAGES=(#{{{
   git-svn
   gnome-tweaks
   gperf
+  jq
   libncurses5-dev
   libsecret-tools
   libtool-bin
@@ -60,9 +61,11 @@ if ! type fzf 2>&- >/dev/null;then
 fi
 
 if ! which fd; then
-  wget https://github.com/sharkdp/fd/releases/download/v7.0.0/fd_7.0.0_amd64.deb
-  sudo dpkg -i fd_7.0.0_amd64.deb
-  rm fd_7.0.0_amd64.deb
+  pkg=$(curl -s https://api.github.com/repos/sharkdp/fd/releases/latest \
+    | jq -r '.assets[].browser_download_url | select(contains("musl") | not) | select(endswith("amd64.deb"))')
+  curl -LJO $pkg
+  sudo dpkg -i $(basename $pkg)
+  rm -f $(basename $pkg)
 fi
 
 declare -A UMAKE_PACKAGES=(
