@@ -68,6 +68,43 @@ if ! which fd; then
   rm -f $(basename $pkg)
 fi
 
+if ! fc-list | grep Hack; then
+  pkg=$(curl -s https://api.github.com/repos/source-foundry/Hack/releases/latest \
+    | jq -r '.assets[].browser_download_url | select(endswith("ttf.tar.gz"))' \
+    | head -n1)
+  set -e
+  mkdir -p ~/.local/share/fonts
+  pushd ~/.local/share/fonts
+  curl -LJ $pkg | tar zxv --strip 1 --wildcards ttf/*.ttf
+  popd
+
+  mkdir -p ~/.config/fontconfig/conf.d
+  cat > ~/.config/fontconfig/conf.d/45-Hack.conf <<EOF
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <!-- Declare Hack a monospace font -->
+  <alias>
+    <family>Hack</family>
+    <default><family>monospace</family></default>
+  </alias>
+  <!-- if this file is put in user’s configuration, unset sans-serif family -->
+  <match>
+    <test compare="eq" name="family">
+        <string>sans-serif</string>
+    </test>
+    <test compare="eq" name="family">
+        <string>Hack</string>
+    </test>
+    <edit mode="delete" name="family"/>
+  </match>
+</fontconfig>
+EOF
+  set +e
+
+  fc-cache -fv
+fi
+
 declare -A UMAKE_PACKAGES=(
   [web]=firefox-dev
 )
