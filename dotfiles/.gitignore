@@ -8,3 +8,8 @@ GSYMS
 GTAGS
 gmon.out
 /node_modules
+
+# gdb metafiles
+/.gdb
+/gdb.txt
+.gdb_history
