@@ -58,7 +58,7 @@ if ! shopt -oq posix; then
 fi
 
 __bashrc_dir=$(dirname $(readlink -e ${BASH_SOURCE[0]}))
-for __bash_scripts in $__bashrc_dir/profile.d/*.sh;do
+for __bash_scripts in $__bashrc_dir/profile.d/*.sh $__bashrc_dir/completions/*;do
 	if [ -r $__bash_scripts ];then . $__bash_scripts;fi
 done
 unset __bash_scripts
