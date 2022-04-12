@@ -1,0 +1,14 @@
+# configuration for ripgrep
+# vim :syntax=rc:
+
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+--glob=!*.min.js
+--glob=!*.js.map
+--glob=!*/WEB-INF/*
+--glob=!*/doc/html/*
+
+--type-add
+web:*.{html,css,js}*
