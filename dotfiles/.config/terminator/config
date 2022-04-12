@@ -1,14 +1,10 @@
 [global_config]
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, ANCStoryURLHandler, BugzillaBugURLHandler, TerminalShot, LaunchpadBugURLHandler
   focus = system
   handle_size = 3
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, ANCStoryURLHandler, BugzillaBugURLHandler, TerminalShot, LaunchpadBugURLHandler
 [keybindings]
   go_next = None
-  new_window = <Primary><Shift>n
-  reset = None
-  reset_clear = <Primary><Shift>l
   switch_to_tab_1 = <Alt>1
-  switch_to_tab_10 = <Alt>0
   switch_to_tab_2 = <Alt>2
   switch_to_tab_3 = <Alt>3
   switch_to_tab_4 = <Alt>4
@@ -17,6 +13,28 @@
   switch_to_tab_7 = <Alt>7
   switch_to_tab_8 = <Alt>8
   switch_to_tab_9 = <Alt>9
+  switch_to_tab_10 = <Alt>0
+  reset = None
+  reset_clear = <Primary><Shift>l
+  new_window = <Primary><Shift>n
+[profiles]
+  [[default]]
+    audible_bell = True
+    urgent_bell = True
+    background_darkness = 0.82
+    background_type = transparent
+    cursor_color = "#ffffff"
+    font = Hack 10
+    foreground_color = "#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+    split_to_group = True
+  [[remote]]
+    background_color = "#0a0a0a"
+    cursor_color = "#aaaaaa"
+    font = Hack 9
+    foreground_color = "#e9b96e"
+    use_system_font = False
 [layouts]
   [[default]]
     [[[child1]]]
@@ -27,16 +45,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    audible_bell = True
-    background_color = "#0a0a0a"
-    background_darkness = 0.82
-    background_type = transparent
-    cursor_color = "#ffffff"
-    font = Hack 10
-    foreground_color = "#ffffff"
-    scrollback_infinite = True
-    split_to_group = True
-    urgent_bell = True
-    use_system_font = False
