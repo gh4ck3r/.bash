@@ -3,6 +3,8 @@
 function setup_global_env()
 {
   local PATH_GLOBAL_PREFIX=/opt/global
+  [[ -d $PATH_GLOBAL_PREFIX ]] || return
+
   local PATH_GLOBAL_BIN=$PATH_GLOBAL_PREFIX/bin
 
   if [[ -x $PATH_GLOBAL_BIN/global ]];then
