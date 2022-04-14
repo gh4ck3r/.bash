@@ -34,6 +34,7 @@
     cursor_color = "#aaaaaa"
     font = Hack 9
     foreground_color = "#e9b96e"
+    scrollback_infinite = True
     use_system_font = False
 [layouts]
   [[default]]
