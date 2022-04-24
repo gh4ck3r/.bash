@@ -17,3 +17,9 @@ window.terminator-terminal-window tab {
 window.terminator-terminal-window tab:checked {
   background: @shadow_color;
 }
+
+/* hard to select first column of vertically splitted pane in Terminator on Ubuntu 20.04 */
+paned.horizontal > separator {
+	margin-right: -3px;
+	padding-right: 3px;
+}
