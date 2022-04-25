@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DO NOT APPLY THIS FOR Ubuntu on Windows (WSL)
-if [[ $(uname -r) =~ .*Microsoft ]] || [[ $(uname -o) == Msys ]];then return;fi
+if [[ $(uname -r) =~ .*[Microsoft|WSL2] ]] || [[ $(uname -o) == Msys ]];then return;fi
 ################################################################################
 # Enable window resize with mouse right click
 # for 12.04
