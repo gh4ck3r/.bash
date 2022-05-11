@@ -2,7 +2,8 @@
   editor = vim
   excludesfile = ~/.gitignore
 [merge]
-  tool = bc3
+  tool = vimdiff
+  guitool = bc3
 [color]
   ui = auto
   status = auto
