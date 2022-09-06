@@ -1,14 +1,16 @@
 #!/bin/bash
 # vim:set fdm=marker:
 
+set -e
 declare -a APT_PACKAGES=(#{{{
   ack-grep
-  ask
   autoconf
   bison
-  curl
+  build-essential
   cscope
+  curl
   exuberant-ctags
+  flameshot
   flex
   fonts-font-awesome
   git
@@ -22,10 +24,12 @@ declare -a APT_PACKAGES=(#{{{
   libxml2-utils
   net-tools
   qemu-kvm
+  ripgrep
   sdcv
   silversearcher-ag
   subversion
   terminator
+  tmux
   tree
   ubuntu-make
   vim
@@ -33,7 +37,10 @@ declare -a APT_PACKAGES=(#{{{
   xclip
   xsltproc
 ); #}}}
-sudo apt install ${APT_PACKAGES[@]}
+
+sudo add-apt-repository -y ppa:lyzardking/ubuntu-make
+sudo apt update
+sudo apt install -y ${APT_PACKAGES[@]}
 
 declare -a SNAP_PACKAGES=(
   wavebox
@@ -41,9 +48,8 @@ declare -a SNAP_PACKAGES=(
 sudo snap install ${SNAP_PACKAGES[@]}
 
 declare -a SNAP_CLASSIC_PACKAGES=(
-  rg
 );
-sudo snap install ${SNAP_CLASSIC_PACKAGES[@]} --classic
+#sudo snap install ${SNAP_CLASSIC_PACKAGES[@]} --classic
 
 git submodule init && git submodule update
 
@@ -156,3 +162,8 @@ isCustomCommandInstalled 'Close window' ||
 
 # }}}
 ################################################################################
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+. ~/.bashrc
+sudo apt install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+cargo install alacritty
