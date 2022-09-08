@@ -13,6 +13,7 @@ declare -a APT_PACKAGES=(#{{{
   flameshot
   flex
   fonts-font-awesome
+  gawk
   git
   git-svn
   gnome-tweaks
