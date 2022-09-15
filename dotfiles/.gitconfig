@@ -25,8 +25,6 @@
   unignore = update-index --no-assume-unchanged
   untracked = ls-files --others --exclude-standard --directory --no-empty-directory
   root = rev-parse --show-toplevel
-[include]
-  path = .gituser
 [difftool]
   prompt = 0
 [difftool "bc3"]
@@ -43,3 +41,6 @@
   required = true
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
+[include]
+  path = .gituser
+  path = .gitdelta

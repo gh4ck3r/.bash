@@ -168,3 +168,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 . ~/.bashrc
 sudo apt install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 cargo install alacritty bat
+
+function installDelta()
+{
+  local URL=$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r ".assets[] | select(.name | contains(\"git-delta_\") and endswith(\"_amd64.deb\")) | .browser_download_url");
+  curl -OL $URL && sudo dpkg -i $(basename $URL);
+  rm -f $(basename $URL)
+}
+installDelta
