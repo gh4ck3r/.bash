@@ -22,4 +22,7 @@ if [[ -x $(which gsettings) ]];then
   else
     gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
   fi
+
+  # hide mounted drives from dock
+  gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
 fi
