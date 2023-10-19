@@ -2,11 +2,12 @@
 # vim: syntax=sh
 
 # some more ls aliases
+[[ "$TERM" =~ .*color ]] || alias ls='ls -F'
 # This alias prevent colirized output
 alias ls='ls --show-control-char'
-alias l='ls -ClNFh --ignore={GPATH,GTAGS,GRTAGS,gtags.files}'
-alias ll='ls -ClNFh'
-alias la='ls -AlNFh'
+alias l='ls -ClNh --ignore={GPATH,GTAGS,GRTAGS,gtags.files}'
+alias ll='ls -ClNh'
+alias la='ls -AlNh'
 
 alias rm='rm -iv'
 alias mv='mv -iv'
