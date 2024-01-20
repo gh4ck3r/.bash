@@ -7,7 +7,6 @@ if  type -t __git_ps1 > /dev/null 2>&1;then
   export GIT_PS1_SHOWUNTRACKEDFILES=true
   export GIT_PS1_SHOWUPSTREAM="auto verbose"
   export GIT_PS1_DESCRIBE_STYLE="branch"
-  export GIT_PS1_HIDE_IF_PWD_IGNORED=true
 else
 function __git_ps1()
 {
