@@ -1,6 +1,6 @@
 # vim:ft=gitconfig:
 [core]
-  pager = delta
+  #pager = delta
 
 [interactive]
   diffFilter = delta --dark --color-only
