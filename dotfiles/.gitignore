@@ -15,3 +15,6 @@ gmon.out
 .gdb_history
 
 .ccls-cache/
+.cache/
+
+compile_commands.json
