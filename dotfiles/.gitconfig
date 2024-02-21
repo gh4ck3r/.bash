@@ -35,6 +35,8 @@
   prompt = 0
 [difftool "bc3"]
   trustExitCode = true
+[mergetool]
+  keepBackup = false
 [mergetool "bc3"]
   trustExitCode = true
 [credential]
