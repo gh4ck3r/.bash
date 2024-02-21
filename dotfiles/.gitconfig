@@ -52,3 +52,5 @@
   fsckObjects = true
 [rebase]
   autorebase = true
+[commit]
+  verbose = true
