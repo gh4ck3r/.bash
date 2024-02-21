@@ -54,3 +54,5 @@
   autorebase = true
 [commit]
   verbose = true
+[rerere]
+  enabled = true
