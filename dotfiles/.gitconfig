@@ -20,6 +20,7 @@
   submodule = log
   guitool = bc3
   noprefix = true
+  algorithm = histogram
 [status]
   submodulesummary = 1
 [alias]
