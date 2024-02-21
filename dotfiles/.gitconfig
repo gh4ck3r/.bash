@@ -56,3 +56,5 @@
   verbose = true
 [rerere]
   enabled = true
+[help]
+  autocorrect = 1
