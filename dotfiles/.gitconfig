@@ -47,3 +47,5 @@
 [include]
   path = .gituser
   path = .gitdelta
+[transfer]
+  fsckObjects = true
