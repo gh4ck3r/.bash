@@ -60,3 +60,6 @@
   enabled = true
 [help]
   autocorrect = 1
+[fetch]
+  prune = true
+  pruneTags = true
