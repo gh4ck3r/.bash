@@ -21,6 +21,7 @@
   guitool = bc3
   noprefix = true
   algorithm = histogram
+  tool = difftastic
 [status]
   submodulesummary = 1
 [alias]
