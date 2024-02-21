@@ -16,6 +16,7 @@
   diff = auto
 [push]
   default = simple
+  followTags = true
 [diff]
   submodule = log
   guitool = bc3
