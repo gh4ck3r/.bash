@@ -11,7 +11,7 @@
   features = side-by-side line-numbers decorations
 
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 
 [diff]
   colorMoved = default
