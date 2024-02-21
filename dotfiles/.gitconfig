@@ -50,3 +50,5 @@
   path = .gitdelta
 [transfer]
   fsckObjects = true
+[rebase]
+  autorebase = true
