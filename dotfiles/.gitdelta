@@ -10,9 +10,6 @@
   light = false;
   features = side-by-side line-numbers decorations
 
-[merge]
-  conflictstyle = zdiff3
-
 [diff]
   colorMoved = default
   colorMovedWS = allow-indentation-change
