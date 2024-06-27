@@ -84,6 +84,7 @@ set script-extension strict
 #set python print-stack full
 set tui tab-width 2
 set tui compact-source on
+set debuginfod enabled on
 
 skip -gfi /usr/include/c++/*/bits/*
 skip -gfi /usr/include/c++/*/ext/*
