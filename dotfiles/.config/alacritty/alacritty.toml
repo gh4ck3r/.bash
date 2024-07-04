@@ -1,0 +1,59 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#303030"
+blue = "#4040ff"
+cyan = "#00ffff"
+green = "#00ff00"
+magenta = "#ffaaff"
+red = "#ff0000"
+white = "#ffffff"
+yellow = "#ffff00"
+
+[colors.normal]
+black = "#202020"
+blue = "#0000dd"
+cyan = "#00dddd"
+green = "#00dd00"
+magenta = "#dd80dd"
+red = "#dd0000"
+white = "#dddddd"
+yellow = "#dddd00"
+
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10.0
+
+[font.bold]
+family = "Hack"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack"
+style = "Italic"
+
+[font.normal]
+family = "Hack"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "N"
+mods = "Control|Shift"
+
+[scrolling]
+history = 100000
+
+[window]
+opacity = 0.8
