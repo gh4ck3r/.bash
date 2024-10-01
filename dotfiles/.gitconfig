@@ -69,3 +69,5 @@
 	writeCommitGraph = true
 [maintenance]
 	repo = /home/ghacker/devel/linux
+[advice]
+  detachedHead = false
