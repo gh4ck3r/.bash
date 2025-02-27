@@ -24,6 +24,9 @@
   noprefix = true
   algorithm = histogram
   tool = difftastic
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [status]
   submodulesummary = 1
   relativePaths = true
