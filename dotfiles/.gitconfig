@@ -75,3 +75,5 @@
   ui = auto
 [branch]
   sort = -committerdate
+[tag]
+  sort = version:refname
