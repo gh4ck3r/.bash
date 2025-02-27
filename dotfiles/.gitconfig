@@ -71,3 +71,5 @@
 	repo = /home/ghacker/devel/linux
 [advice]
   detachedHead = false
+[column]
+  ui = auto
