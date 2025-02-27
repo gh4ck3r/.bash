@@ -65,6 +65,7 @@
   autorebase = true
 [rerere]
   enabled = true
+  autoupdate = true
 [help]
   autocorrect = 1
 [fetch]
