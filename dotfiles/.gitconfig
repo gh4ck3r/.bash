@@ -73,3 +73,5 @@
   detachedHead = false
 [column]
   ui = auto
+[branch]
+  sort = -committerdate
