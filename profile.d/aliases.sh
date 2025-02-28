@@ -22,3 +22,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 [[ $(type -t hexdump) == file ]] || alias hexdump='od -t x1z'
 
 alias tunnel='ssh -fnNT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -L'
+
+# let 'ip' command show some colors
+alias ip='ip -c'
