@@ -107,6 +107,10 @@ if ! fc-list | grep Hack; then
   </match>
 </fontconfig>
 EOF
+  # Hack Nerd font from from https://www.nerdfonts.com/
+  curl -L $(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest \
+    | jq -r '.assets[].browser_download_url | select(endswith("Hack.tar.xz"))' \
+    | tr -d '\n') | tar Jxv -C ~/.local/share/fonts
   set +e
 
   fc-cache -fv
