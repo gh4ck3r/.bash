@@ -180,3 +180,9 @@ function installDelta()
   rm -f $(basename $URL)
 }
 installDelta
+
+################################################################################
+# {{{ install [starship](https://starship.rs)
+curl -sS https://starship.rs/install.sh | sh
+# }}}
+################################################################################
