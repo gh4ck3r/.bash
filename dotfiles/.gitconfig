@@ -64,6 +64,7 @@
   fsckObjects = true
 [rebase]
   autorebase = true
+  autostash = true
 [rerere]
   enabled = true
   autoupdate = true
