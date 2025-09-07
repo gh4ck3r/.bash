@@ -83,3 +83,5 @@
   sort = -committerdate
 [tag]
   sort = version:refname
+[pull]
+	rebase = true
