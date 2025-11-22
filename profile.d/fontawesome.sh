@@ -29,3 +29,28 @@ if ! +FontAwesome; then
   echo "Failed to install Font Awesome!"
   return
 fi
+
+function +D2CodingNerdFont()
+{
+  unset -f +D2CodingNerdFont
+  (fc-list | grep 'D2CodingLigature Nerd Font' >/dev/null 2>&1) && return
+
+  # from https://www.nerdfonts.com/font-downloads
+  local download_url="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/D2Coding.zip"
+  local font_dir=~/.local/share/fonts;
+
+  (
+    set -e;
+    mkdir -p $font_dir
+    cd $font_dir
+    curl -LO $download_url
+    unzip D2Coding.zip '*.ttf'
+    rm -f D2Coding.zip
+    fc-cache -v
+  )
+}
+
+if ! +D2CodingNerdFont; then
+  echo "Failed to install Font Awesome!"
+  return
+fi
