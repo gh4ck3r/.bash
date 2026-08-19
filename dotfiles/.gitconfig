@@ -65,6 +65,7 @@
 [rebase]
   autorebase = true
   autostash = true
+  merges = rebase-merges
 [rerere]
   enabled = true
   autoupdate = true
