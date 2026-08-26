@@ -12,3 +12,5 @@
 
 --type-add
 web:*.{html,css,js}*
+
+--no-messages
