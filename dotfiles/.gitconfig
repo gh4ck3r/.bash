@@ -87,3 +87,5 @@
   sort = version:refname
 [pull]
 	rebase = true
+[log]
+	date = local
