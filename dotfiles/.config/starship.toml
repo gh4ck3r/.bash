@@ -175,7 +175,7 @@ symbol = " "
 symbol = "  "
 
 [git_branch]
-format = '[ $symbol$branch(:$remote_branch)]($style)'
+format = '[ $symbol({$remote_branch}/)$branch]($style)'
 symbol = " "
 style = 'bold yellow'
 #style = 'bold purple'
