@@ -5,7 +5,7 @@
 [[ "$TERM" =~ .*color ]] || alias ls='ls -F'
 # This alias prevent colirized output
 alias ls='ls --show-control-char --hyperlink=auto'
-alias l='ls -lNh --ignore={GPATH,GTAGS,GRTAGS,gtags.files}'
+alias l='ls -lNh'
 alias ll='ls -AlNh'
 alias la='ls -alNh'
 
