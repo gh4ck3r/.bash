@@ -3,7 +3,8 @@ draw_bold_text_with_bright_colors = true
 
 [colors.bright]
 black = "#303030"
-blue = "#4040ff"
+#blue = "#4040ff"
+blue = "#1e90ff"       # 뚜렷하고 밝은 도저 블루(Dodger Blue)
 cyan = "#00ffff"
 green = "#00ff00"
 magenta = "#ffaaff"
@@ -13,7 +14,8 @@ yellow = "#ffff00"
 
 [colors.normal]
 black = "#202020"
-blue = "#0000dd"
+#blue = "#0000dd"
+blue = "#61afef"       # 기존 대비 가독성이 높은 원다크(One Dark) 계열의 블루
 cyan = "#00dddd"
 green = "#00dd00"
 magenta = "#dd80dd"
